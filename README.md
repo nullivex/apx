@@ -20,7 +20,7 @@ app.use(function(req,res,next){
       if(err) throw err
       if(msg) next(msg)
       else {
-        app.req.locals.user_token = user_token
+        req.locals.user_token = user_token
         next()
       }
     })
@@ -34,11 +34,15 @@ app.listen()
 
 #### Authentication
 
+##### Connect
+
 `apex.connect(secret)`
 
 This method should allow Mantle or Foot to supply a secret that will allow it to connect and obtain a special **Authorize Token**. The token is returned to minimize the number times the secret is submitted.
 
 Once an **Authorize Token** is returned it will be required for all other authentication requests which includes user authentication. The **Authorize Token** will only be allowed to connect from the IP that originated the `apex.connect()` call. Only after a user is authorized will they receive a **User Token**
+
+##### Authorize
 
 `apex.authorize(auth_token,collection,id,secret)`
 

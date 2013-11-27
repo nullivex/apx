@@ -3,7 +3,7 @@
 
 ##SnailJS Central data store/provider API
 
-### Simple Example Using Expres.io
+### Simple Example Using Express.io
 
 ```js
 var apex = new require("apex-sdk")("admin")

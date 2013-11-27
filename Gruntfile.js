@@ -6,7 +6,6 @@ module.exports = function (grunt) {
   var mountFolder = function (connect, dir) {
     return connect.static(require("path").resolve(dir))
   }
-  var template = require("grunt").template
 
   var config = {
 
@@ -18,13 +17,6 @@ module.exports = function (grunt) {
           "assets/styles/**/*.css"
         ],
           tasks: ["copy:dev"]
-      },
-
-      neuter: {
-        files: [
-          "app/**/*.js"
-        ],
-          tasks: ["neuter", "copy:dev"]
       }
     },
 
@@ -78,11 +70,13 @@ module.exports = function (grunt) {
       },
       all: [
         "Gruntfile.js",
-        "app/**/*.js",
+        "server/**/*.js",
+        "client/**/*.js",
+        "models/**/*.js",
+        "storage/**/*.js",
         "test/**/*.js"
       ]
     }
-
   }
 
   // if you'd like to modify the default grunt config, do it here
@@ -139,9 +133,7 @@ module.exports = function (grunt) {
   grunt.registerTask("build", [
     "clean:dist",
     "concurrent:dist",
-    "copy:dev",
-    "concat",
-    "rev"
+    "copy:dev"
   ])
 
   grunt.registerTask("default", [

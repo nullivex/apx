@@ -106,7 +106,7 @@ var buildRoutesForModel = function(app, model, modelName, modelPlural){
 /*
   ADD YOUR MODELS HERE
 */
-buildRoutesForModel(app, require("./models/.example")(mongoose), "message", "messages")
+buildRoutesForModel(app, require("./../models/.example.js")(mongoose), "message", "messages")
 
 http.createServer(app).listen(PORT)
 if (ssl_options) {

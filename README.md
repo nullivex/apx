@@ -1,4 +1,4 @@
-apex
-====
+# [SnailJS](//github.com/snailjs/).[Apex](//github.com/snailjs/apex/)
+![Logo](snail-apex.png)
 
-SnailJS MongoDB API server
+##Core data store/provider API

@@ -1,13 +1,17 @@
-var mongoose = require("mongoose")
+var apex = {
+    util: {
+      bcrypt: require("../util/bcrypt")
+    }
+  }
+  , mongoose = require("mongoose")
   , merge = require("mongoose-merge-plugin")
   , validate = require("mongoose-validator").validate
   , passport = require("passport")
   , LocalStrategy = require("passport-local").Strategy
-  , bcrypt = require("bcrypt")
-  , SALT_WORK_FACTOR = 12
   , schema, model
 
 //load plugins
+apex.util.bcrypt.init(12)
 mongoose.plugin(merge)
 
 //define schema
@@ -29,9 +33,7 @@ schema = new mongoose.Schema({
     required: true,
     select: false,
     get: function(){ return "********" },
-    set: function(v){
-      return bcrypt.hashSync(v,bcrypt.genSaltSync(SALT_WORK_FACTOR))
-    }
+    set: function(v){ return apex.util.bcrypt.encode(v) }
   },
   name: {
     first: {
@@ -166,7 +168,7 @@ passport.use(new LocalStrategy(
       if(err || !account)
         done(err,false,{message: error_message})
       else {
-        bcrypt.compare(password, account.password, function(err,is_match){
+        apex.util.bcrypt.compare(password, account.password, function(err,is_match){
           if(err)
             done(err,false,{message: error_message})
           else if(!is_match){

@@ -15,8 +15,7 @@ module.exports = function (grunt) {
       assets: {
         files: [
           "assets/styles/**/*.css"
-        ],
-          tasks: ["copy:dev"]
+        ]
       }
     },
 

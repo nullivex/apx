@@ -4,7 +4,7 @@ module.exports = function(config){
     basePath: "",
     frameworks: ["jasmine"],
     files: [
-      "test/*.spec.js",
+      "**/*.spec.js",
     ],
     port: 9876,
     colors: true,

@@ -1,3 +1,5 @@
 var apex = require("./apex")
 apex.util.load("bcrypt")
 console.log(apex.util.bcrypt.encode("sunuvvabeech"))
+console.log(apex.util.bcrypt.compare("sunuvvabeech","$2a$10$LwTXB.cRbAyIheJelZGHruZZ2lfTMeQY5fOaXDw8x2x4246hEcL0u"))
+console.log(apex.util.bcrypt.encode("sunuvvabeech","$2a$10$LwTXB.cRbAyIheJelZGHru"))

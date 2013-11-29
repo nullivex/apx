@@ -1,4 +1,5 @@
 "use strict";
+var _bcrypt = false
 /*!
  * Module dependencies.
  */
@@ -21,18 +22,19 @@ var DEFAULT_WORK_FACTOR = 12
  * @api public
  */
 module.exports = function(){
-  this.initted = false
-  this.work_factor = DEFAULT_WORK_FACTOR
-  return this
+  if(!_bcrypt) _bcrypt = this.init()
+  return _bcrypt
 }
 
 module.exports.init = function(factor){
-  if(!this.initted){
+  if(!_bcrypt){
     if(factor + 0 < 1) factor = DEFAULT_WORK_FACTOR
-    this.work_factor = factor
+    _bcrypt = this
+    _bcrypt.work_factor = factor
+    _bcrypt.salt = false
   }
-  this.initted = true
-  return this
+  _bcrypt.salt = _bcrypt.salt || BCRYPT.genSaltSync(_bcrypt.work_factor)
+  return _bcrypt
 }
 /**
  * Encode a string
@@ -40,9 +42,9 @@ module.exports.init = function(factor){
  * @param {String} payload Payload string to encode
  * @api public
  */
-module.exports.encode = function(str){
-  this.init()
-  return BCRYPT.hashSync(str,BCRYPT.genSaltSync(this.work_factor))
+module.exports.encode = function(str,salt){
+  _bcrypt.init()
+  return BCRYPT.hashSync(str,salt || _bcrypt.salt)
 }
 
 /**
@@ -52,5 +54,5 @@ module.exports.encode = function(str){
  * @api public
  */
 module.exports.compare = function(str,crypted,fn){
-  BCRYPT.compare(str, crypted, fn)
+  return BCRYPT.compareSync(str,crypted,fn)
 }

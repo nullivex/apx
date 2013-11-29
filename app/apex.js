@@ -18,7 +18,7 @@ module.exports = function(){
   return _apex
 }
 
-module.exports.util = {"bcrypt": null}
+module.exports.util = {"bcrypt": false}
 /**
  * Util module loader
  *

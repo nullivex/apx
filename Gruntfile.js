@@ -73,6 +73,7 @@ module.exports = function (grunt) {
         "client/**/*.js",
         "models/**/*.js",
         "storage/**/*.js",
+        "utils/**/*.js",
         "test/**/*.js"
       ]
     }
@@ -101,12 +102,11 @@ module.exports = function (grunt) {
 
   grunt.registerTask("server", function(target){
     return (target === "dist") ?
-      grunt.task.run(["build", "open", "connect:dist:keepalive"])
+      grunt.task.run(["build"])
     :
       grunt.task.run([
         "clean:server",
         "concurrent:server",
-        "open",
         "watch"
       ])
   })
@@ -122,10 +122,6 @@ module.exports = function (grunt) {
   grunt.registerTask("test-server", [
     "clean:server",
     "concurrent:test",
-    "copy:dev",
-    "copy:test",
-    "connect:test",
-    "open",
     "watch"
   ])
 

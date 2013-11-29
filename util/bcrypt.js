@@ -1,3 +1,4 @@
+"use strict";
 /*!
  * Module dependencies.
  */
@@ -8,6 +9,9 @@ var BCRYPT = require("bcrypt")
  */
 var DEFAULT_WORK_FACTOR = 12
 
+/*!
+ * Module exports.
+ */
 /**
  * Abstract Bcrypt constructor
  *
@@ -16,27 +20,28 @@ var DEFAULT_WORK_FACTOR = 12
  * @param {Number} workfactor Salt generation "work factor" (default: 12)
  * @api public
  */
-function Bcrypt(factor){
-  if(factor + 0 < 1) factor = DEFAULT_WORK_FACTOR
-  this.work_factor = factor
+module.exports = function(){
+  this.initted = false
+  this.work_factor = DEFAULT_WORK_FACTOR
+  return this
 }
 
-/**
- * The current "work factor" (see bcrypt lib docs)
- *
- * @api public
- * @property work_factor
- */
-Bcrypt.prototype.work_factor
-
+module.exports.init = function(factor){
+  if(!this.initted){
+    if(factor + 0 < 1) factor = DEFAULT_WORK_FACTOR
+    this.work_factor = factor
+  }
+  this.initted = true
+  return this
+}
 /**
  * Encode a string
  *
  * @param {String} payload Payload string to encode
  * @api public
  */
-Bcrypt.prototype.encode = function(str){
-  if(this.work_factor + 0 < 1) this.work_factor = DEFAULT_WORK_FACTOR
+module.exports.encode = function(str){
+  this.init()
   return BCRYPT.hashSync(str,BCRYPT.genSaltSync(this.work_factor))
 }
 
@@ -46,11 +51,6 @@ Bcrypt.prototype.encode = function(str){
  * @param {String} payload Payload string to encode
  * @api public
  */
-Bcrypt.prototype.compare = function(str,crypted,fn){
+module.exports.compare = function(str,crypted,fn){
   BCRYPT.compare(str, crypted, fn)
 }
-
-/*!
- * Module exports.
- */
-module.exports = Bcrypt

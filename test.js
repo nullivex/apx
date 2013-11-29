@@ -2,16 +2,16 @@
 global.chai = require("chai")
 
 // should style
-global.should = require("chai").should()
+//global.should = require("chai").should()
 
 // expect style
-// global.expect = require("chai").expect
+global.expect = require("chai").expect
 
 // assert style
-// global.assert = require("chai").assert
+//global.assert = require("chai").assert
 
 // chai-supertest
-var chaiSupertest = require("chai-supertest")
+var chaiSupertest = require("supertest-chai")
 var request = chaiSupertest.request
 chai.use(chaiSupertest.httpAsserts)
 
@@ -33,7 +33,7 @@ process.env.NODE_ENV = "test"
 require("blanket")
 
 // get the application server module
-global.app = require("./../app")
+global.apex = require("./apex.js")
 
 // get the super-agent
-global.user = request(app).agent()
+global.user = request(apex).agent()

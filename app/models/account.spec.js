@@ -1,6 +1,6 @@
 "use strict";
 describe("SnailJS.Apex.Models.Account",function(){
-  it("puts the lotion",function(){
-    expect(true).toBe(true)
+  it("should exist",function(){
+    expect("Account Model Stuff").to.be.true
   })
 })

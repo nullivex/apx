@@ -1,0 +1,5 @@
+--require test
+--reporter spec
+--ui bdd
+util/**/*.spec.js
+app/**/*.spec.js

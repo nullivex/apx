@@ -1,6 +1,6 @@
 "use strict";
 describe("SnailJS.Apex.Client",function(){
-  it("puts the lotion",function(){
-    expect(true).toBe(true)
+  it("should exist",function(){
+    expect("Client Stuff").to.be.true
   })
 })

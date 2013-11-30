@@ -33,7 +33,7 @@ process.env.NODE_ENV = "test"
 require("blanket")
 
 // get the application server module
-global.apex = require("./apex.js")
+global.apex = require("./apex")
 
 // get the super-agent
 global.user = request(apex).agent()

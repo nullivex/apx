@@ -27,7 +27,7 @@ module.exports.util = {"bcrypt": false}
  */
 module.exports.util.load = function(mod){
   if("bcrypt" === mod){
-    this.bcrypt = require("./util/bcrypt").init()
+    this.bcrypt = require("../util/bcrypt").init()
   }
   return _apex
 }

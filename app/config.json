@@ -1,0 +1,8 @@
+{"db":
+  {"name": "apex"}
+  ,"session": {"secret":"4eRK4ELSxHQ7FcYb78"}
+  ,"app":
+    {"description": "SnailJS Apex Data Service"
+    ,"author": "Tony Butler, Bryan Tong"
+    }
+}

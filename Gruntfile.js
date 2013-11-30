@@ -1,139 +1,45 @@
-"use strict";
-
-module.exports = function (grunt) {
-  // load all grunt tasks
-  require("matchdep").filterDev("grunt-*").forEach(grunt.loadNpmTasks)
-  var mountFolder = function (connect, dir) {
-    return connect.static(require("path").resolve(dir))
-  }
-
-  var config = {
-
-    // Watch tasks
-    // ------------------
-    watch: {
-      assets: {
-        files: [
-          "assets/styles/**/*.css"
+module.exports = function(grunt) {
+  //basic config
+  grunt.initConfig({
+    mochaTest: {
+      admin: {
+        options: {
+          require: "./app/test",
+          reporter: "list",
+          ui: "bdd"
+        },
+        src: [
+          "util/**/*.test.js",
+          "app/**/*.test.js"
         ]
       }
     },
-
-    // Server tasks
-    // ------------------
-    connect: {
-      options: {
-        port: 9000,
-          // change this to '0.0.0.0' to access the server from outside
-          hostname: "localhost"
-      },
-      test: {
-        options: {
-          middleware: function (connect) {
-            return [
-              mountFolder(connect, "tmp")
-            ]
-          }
-        }
-      },
-      dist: {
-        options: {
-          middleware: function (connect) {
-            return [
-              mountFolder(connect, "dist")
-            ]
-          }
-        }
+    watch: {
+      "test": {
+        files: ["*.js"],
+        tasks: ["test"]
       }
     },
-
-    // Dist
-    // ------------------
-    clean: {
-      dist: {
-        files: [{
-                  dot: true,
-                  src: [
-                    "tmp",
-                    "dist/*",
-                    "!dist/.git*"
-                  ]
-                }]
-      },
-      server: "tmp"
-    },
-
-    jshint: {
-      options: {
-        jshintrc: ".jshintrc"
-      },
-      all: [
-        "Gruntfile.js",
-        "server/**/*.js",
-        "client/**/*.js",
-        "models/**/*.js",
-        "storage/**/*.js",
-        "utils/**/*.js",
-        "test/**/*.js"
-      ]
+    projectUpdate: {
+      projectUpdate: {
+        options: {
+          commands: [
+            {cmd: "npm", args: ["install"]},
+            {cmd: "npm", args: ["update"]},
+            {cmd: "npm", args: ["prune"]}
+          ]
+        }
+      }
     }
-  }
-
-  // if you'd like to modify the default grunt config, do it here
-  // for example:
-  // config.less = { ... }
-
-  // concurrent tasks. customize this instead of the multitasks for faster
-  // builds
-  config.concurrent = {
-    server: [
-      "copy:dev"
-    ],
-    test: [
-    ],
-    dist: [
-      "copy:dist"
-    ]
-  }
-
-  grunt.initConfig(config)
-
-  grunt.renameTask("regarde", "watch")
-
-  grunt.registerTask("server", function(target){
-    return (target === "dist") ?
-      grunt.task.run(["build"])
-    :
-      grunt.task.run([
-        "clean:server",
-        "concurrent:server",
-        "watch"
-      ])
   })
+  //load modules
+  grunt.loadNpmTasks("grunt-mocha-test")
+  grunt.loadNpmTasks("grunt-contrib-watch")
+  grunt.loadNpmTasks("grunt-project-update")
 
-  grunt.registerTask("test", [
-    "clean:server",
-    "concurrent:test",
-    "copy:dev",
-    "copy:test",
-    "connect:test"
-  ])
+  //server tasks
+  grunt.registerTask("test",["mochaTest"])
+  grunt.registerTask("update",["projectUpdate"])
+  grunt.registerTask("default",["watch"])
 
-  grunt.registerTask("test-server", [
-    "clean:server",
-    "concurrent:test",
-    "watch"
-  ])
-
-  grunt.registerTask("build", [
-    "clean:dist",
-    "concurrent:dist",
-    "copy:dev"
-  ])
-
-  grunt.registerTask("default", [
-    "jshint",
-    "test",
-    "build"
-  ])
 }

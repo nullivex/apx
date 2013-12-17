@@ -6,7 +6,7 @@
 
 ## APX API Server
 
-APX (pronounced 'apex')is a modern API server designed to serve multiple communication mediums.
+APX *(pronounced 'apex')* is a modern API server designed to serve multiple communication mediums.
 That relies on modern popular packages such as
 [express](https://github.com/visionmedia/express),
 [kue](https://github.com/learnboost/kue),

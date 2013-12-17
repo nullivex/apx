@@ -6,7 +6,7 @@
 
 ## APX API Server
 
-APX (pronounced 'apex')is a modern API server designed to serve multiple communication mediums.
+APX *(pronounced 'apex')* is a modern API server designed to serve multiple communication mediums.
 That relies on modern popular packages such as
 [express](https://github.com/visionmedia/express),
 [kue](https://github.com/learnboost/kue),
@@ -35,8 +35,8 @@ APX can be used homogeneously or through our
 ```
 $ npm install apx
 ```
-
-```app.js
+**app.js**
+```js
 var Apx = require('apx')
 
 var server = new Apx({
@@ -136,7 +136,8 @@ Clustering in APX is a breeze. Simply use
 
 Here is a quick example
 
-```app.js
+**app.js**
+```js
 var Apx = require('./apx')
 
 new Apx({
@@ -149,7 +150,8 @@ new Apx({
 })
 ```
 
-```server.js
+**server.js**
+```js
 var clusterMaster = require('cluster-master')
 
 clusterMaster({

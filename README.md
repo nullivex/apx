@@ -12,7 +12,7 @@ That relies on modern popular packages such as
 [kue](https://github.com/learnboost/kue),
 [socket.io](https://github.com/learnboost/socket.io),
 [winston](https://github.com/flatiron/winston),
-[convict](https://github.com/mozilla/node-convict)
+[object-manage](https://github.com/snailjs/object-manage)
 to make configuration and two-way communication a breeze.
 
 APX is built to be test friendly out of the box and comes with a `testing`
@@ -169,9 +169,8 @@ $ node server
 
 ## Configuration
 
-APX uses [convict](https://github.com/mozilla/node-convict) to load
-and manage configuration data. As such, environment variable overrides
-and JSONC file overrides etc can be used.
+APX uses [object-manage](https://github.com/snailjs/object-manage) to load
+and manage configuration data.
 
 ### Schema
 
@@ -252,3 +251,11 @@ Enables the console transport for [winston](https://github.com/flatiron/winston)
 
 Filename for [winston](https://github.com/flatiron/winston)
 file transport to point to.
+
+## Changelog
+
+### 0.2.0
+* Dropped convict in favor of object-manage
+
+### 0.1.0
+* Initial release

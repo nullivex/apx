@@ -1,6 +1,6 @@
 {
   "name": "apx",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A scalable, extensible, modular API Server",
   "homepage": "https://github.com/snailjs/apx",
   "bugs": "https://github.com/snailjs/apx/issues",
@@ -34,7 +34,6 @@
   },
   "dependencies": {
     "colors": "~0.6.2",
-    "convict": "~0.4.1",
     "fakeredis": "~0.1.3",
     "kue": "~0.6.2",
     "glob": "~3.2.7",

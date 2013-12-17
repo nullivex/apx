@@ -1,4 +1,5 @@
 var Apx = require('../lib/Apx')
+  , path = require('path')
 describe('APX',function(){
   describe('setup',function(){
     it('should fire the ready event',function(done){
@@ -15,7 +16,7 @@ describe('APX',function(){
         testing: true,
         cwd: __dirname
       })
-      expect(inst.resolvePath('init.js')).to.equal(__dirname + '\\init.js')
+      expect(inst.resolvePath('init.js')).to.equal(path.resolve(__dirname + '/init.js'))
     })
   })
   describe('methods',function(){

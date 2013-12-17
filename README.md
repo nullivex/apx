@@ -254,6 +254,9 @@ file transport to point to.
 
 ## Changelog
 
+### 0.2.1
+* Fixes #1
+
 ### 0.2.0
 * Dropped convict in favor of object-manage
 

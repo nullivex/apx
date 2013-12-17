@@ -2,6 +2,7 @@
   "asi": true,
   "laxcomma": true,
   "node": true,
+  "browser": true,
   "esnext": true,
   "bitwise": true,
   "camelcase": true,
@@ -16,5 +17,14 @@
   "undef": true,
   "unused": true,
   "trailing": true,
-  "smarttabs": true
+  "smarttabs": true,
+  "globals": {
+    "describe": false,
+    "it": false,
+    "before": false,
+    "beforeEach": false,
+    "after": false,
+    "afterEach": false,
+    "expect": false
+  }
 }

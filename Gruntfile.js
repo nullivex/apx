@@ -1,45 +1,43 @@
-module.exports = function(grunt) {
-  //basic config
+module.exports = function(grunt){
+
+  //config
   grunt.initConfig({
+    jshint: {
+      options: {
+        jshintrc: true,
+        reporter: require('jshint-stylish')
+      },
+      apx: ['*.js','lib/*.js','test/*.js']
+    },
     mochaTest: {
-      admin: {
+      test: {
         options: {
-          require: "./app/test",
-          reporter: "list",
-          ui: "bdd"
+          reporter: 'spec'
         },
-        src: [
-          "util/**/*.test.js",
-          "app/**/*.test.js"
-        ]
+        src: ['test/init.js','test/*.test.js']
       }
     },
     watch: {
-      "test": {
-        files: ["*.js"],
-        tasks: ["test"]
+      dev: {
+        files: ['*.js','lib/*.js','test/*.js'],
+        tasks: ['test']
       }
     },
     projectUpdate: {
-      projectUpdate: {
-        options: {
-          commands: [
-            {cmd: "npm", args: ["install"]},
-            {cmd: "npm", args: ["update"]},
-            {cmd: "npm", args: ["prune"]}
-          ]
-        }
-      }
+      update: {}
     }
   })
-  //load modules
-  grunt.loadNpmTasks("grunt-mocha-test")
-  grunt.loadNpmTasks("grunt-contrib-watch")
-  grunt.loadNpmTasks("grunt-project-update")
 
-  //server tasks
-  grunt.registerTask("test",["mochaTest"])
-  grunt.registerTask("update",["projectUpdate"])
-  grunt.registerTask("default",["watch"])
+  //load tasks
+  grunt.loadNpmTasks('grunt-contrib-jshint')
+  grunt.loadNpmTasks('grunt-contrib-watch')
+  grunt.loadNpmTasks('grunt-mocha-test')
+  grunt.loadNpmTasks('grunt-project-update')
+
+  //macros
+  grunt.registerTask('update',['projectUpdate'])
+  grunt.registerTask('test',['jshint','mochaTest:test'])
+  grunt.registerTask('dev',['watch:dev'])
+  grunt.registerTask('start',['nodemon:production'])
 
 }

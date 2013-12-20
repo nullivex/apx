@@ -5,7 +5,8 @@ describe('APX',function(){
     it('should fire the ready event',function(done){
       new Apx({
         testing: true,
-        onReady: function(inst){
+        onReady: function(err,inst){
+          if(err) throw err
           expect(inst.isReady).to.equal(true)
           done()
         }

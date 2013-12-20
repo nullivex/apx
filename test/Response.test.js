@@ -21,12 +21,12 @@ describe('APX Response',function(){
     })
     it('should accept an object to add to the body',function(){
       res.add({mydata: 'val1'})
-      expect(res.data.mydata).to.equal('val1')
+      expect(res.get('mydata')).to.equal('val1')
     })
     it('should accept an array of objects to add to the body',function(){
       res.add([{mydata: 'val1'},{mydata2: 'val2'}])
-      expect(res.data.mydata).to.equal('val1')
-      expect(res.data.mydata2).to.equal('val2')
+      expect(res.get('mydata')).to.equal('val1')
+      expect(res.get('mydata2')).to.equal('val2')
     })
     it('should send and fire the callback',function(done){
       res.cb = function(response){

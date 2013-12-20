@@ -254,8 +254,16 @@ file transport to point to.
 
 ## Changelog
 
+### 0.3.0
+* Fixes [#2](https://github.com/snailjs/apx/issues/1) - Objects are now disallowed from being passed to the config
+* Loading framework now more async friendly
+* Init is handled completely async
+* Fixed minor issue with Response object not rendering JSON properly
+* Removed unused dependencies
+* Updated object-manage upstream
+
 ### 0.2.1
-* Fixes #1
+* Fixes [#1](https://github.com/snailjs/apx/issues/1) - Fails when loading required translator
 
 ### 0.2.0
 * Dropped convict in favor of object-manage

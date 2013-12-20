@@ -5,13 +5,13 @@ describe('APX Request',function(){
     , data3 = {test5: {test6: 'val6'}}
   it('should accept data to the constructor',function(){
     var req = new Request(data1)
-    expect(req.data.test1).to.equal('val1')
-    expect(req.data.test2).to.equal('val2')
+    expect(req.get('test1')).to.equal('val1')
+    expect(req.get('test2')).to.equal('val2')
   })
   it('should be able to merge in data after constructing',function(){
     var req = new Request([data1,data2])
-    expect(req.data.test3).to.equal('val3')
-    expect(req.data.test4).to.equal('val4')
+    expect(req.get('test3')).to.equal('val3')
+    expect(req.get('test4')).to.equal('val4')
   })
   it('should be able to get a nested key',function(){
     var req = new Request([data1,data3])

@@ -1,6 +1,6 @@
 {
   "name": "apx",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "A scalable, extensible, modular API Server",
   "homepage": "https://github.com/snailjs/apx",
   "bugs": "https://github.com/snailjs/apx/issues",
@@ -27,6 +27,9 @@
     "json",
     "websocket",
     "socket",
+    "kue",
+    "express",
+    "framework",
     "actionHero"
   ],
   "engines": {
@@ -40,10 +43,8 @@
     "winston": "~0.7.2",
     "winston-memory": "~0.1.0",
     "redis": "~0.9.1",
-    "merge": "~1.1.2",
-    "underscore.nested": "~0.1.0",
-    "underscore": "~1.5.2",
-    "object-manage": "~0.2.0"
+    "object-manage": "~0.2.3",
+    "async": "~0.2.9"
   },
   "devDependencies": {
     "grunt": "~0.4.2",

@@ -254,6 +254,9 @@ file transport to point to.
 
 ## Changelog
 
+### 0.3.1
+* Fixed using real redis during testing mode
+
 ### 0.3.0
 * Fixes [#2](https://github.com/snailjs/apx/issues/1) - Objects are now disallowed from being passed to the config
 * Loading framework now more async friendly

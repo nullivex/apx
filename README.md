@@ -254,6 +254,11 @@ file transport to point to.
 
 ## Changelog
 
+### 0.3.4
+* Updated to **object-manage** 0.4.0
+* Restored `Request.data` and `Response.data` as references to the managed objects.
+* Fixed issue with tasks being passed the entire `job` object instead of `job.data`
+
 ### 0.3.3
 * Updated to **object-manage** 0.3.0
 

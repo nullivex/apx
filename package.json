@@ -43,7 +43,7 @@
     "winston": "~0.7.2",
     "winston-memory": "~0.1.0",
     "redis": "~0.9.1",
-    "object-manage": "~0.2.3",
+    "object-manage": "~0.3.0",
     "async": "~0.2.9"
   },
   "devDependencies": {

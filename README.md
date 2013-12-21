@@ -131,6 +131,41 @@ In other frameworks these are sometimes called "servers". Translators are the
 middleware that consumes connections and produce generic `Request` and `Response`
 objects. An example of a translator would be an *express HTTP server*.
 
+## Plugin Format
+
+### Actions / Tasks
+
+```js
+exports.name = 'name' //should be concise and match the file name
+exports.description = 'description of action or task' //verbose description for generating maps
+exports.run = function(apx,cb){} //code to be executed by apx and fire the cb(err) at the end
+```
+
+### Initializers
+
+``js
+exports.name = 'name' //should be concise and match the file name
+exports.description = 'description of initializer' //verbose description for generating maps
+exports.init = functions(apx,cb){} //code to be executed by apx and fire the cb(err) at the end
+```
+
+### Models
+
+```js
+exports.name = 'name' //should be concise and match the file name
+exports.description = 'description of model' //verbose description for generating maps
+exports.model = {} //model object created by desired database software
+```
+
+### Translators
+
+```js
+exports.name = 'name' //should be concise and match the file name
+exports.description = 'description of action or task' //verbose description for generating maps
+exports.start = function(apx,cb){} //code to be executed to start the translator, firing cb(err) at the end
+exports.stop = function(apx,cb){} //code to be executed to stop the translator, firing cb(err) at the end
+```
+
 ## Clustering
 
 Clustering in APX is a breeze. Simply use
@@ -247,6 +282,8 @@ manager and any time new options are passed it will return a new instance.
 * SysLog added for core level logging. Winston should be used for userspace logging.
 * Kue removed from core package and abstracted to [apx-kue](https://github.com/snailjs/apx-kue)
 * Tasks are no longer initialized by the core should be implemented in an initializer
+* Updated plugin format (this means existing translator plugins will need to upgrade) see the README
+for the prescribed plugin format.
 
 ### 0.3.4
 * Updated to **object-manage** 0.4.0

@@ -7,7 +7,7 @@
 
 ## APX API Server
 
-APX *(pronounced 'apex')* is a non opinionated, pluggable, modern API server designed to serve
+APX *(pronounced 'apex')* is a non-opinionated, pluggable, modern API server designed to serve
 multiple communication mediums. The core APX plugins rely on popular community packages such as
 [express](https://github.com/visionmedia/express),
 [kue](https://github.com/learnboost/kue),
@@ -22,10 +22,10 @@ mode in the configuration that will use mock services and increase testing speed
 ## Why
 
 Well we have evaluated and contributed to several other API servers and just kept
-running into deficiencies or failure to use a popular library or not light weight enough.
+running into deficiencies, such as failure to use a popular library and not light-weight enough.
 
-Thus, we created APX. Its lightweight uses lots of modern packages and wires them all
-together in an extensible loading environment.
+Thus, we created APX. It's light-weight, uses lots of modern packages, and wires them all
+together in an extensible stateful environment.
 
 ## Usage
 
@@ -36,7 +36,9 @@ APX can be used homogeneously or through our
 ```
 $ npm install apx
 ```
+
 **app.js**
+
 ```js
 var apx = require('apx')
 
@@ -55,7 +57,6 @@ apx.setup({
 
 //start (runs initializers and translators)
 apx.start()
-
 ```
 
 ### Generator
@@ -87,7 +88,7 @@ $ yo apx:translator <name>
 
 ## Structure
 
-APX consists of several well known idioms
+APX consists of several well-known idioms
 
 * actions
 * helpers
@@ -101,7 +102,7 @@ APX consists of several well known idioms
 
 Actions are the bread and butter of an API server they serve all
 requests and build responses. Actions are also in charge of firing
-non periodic tasks and utilizing services.
+non-periodic tasks and utilizing services.
 
 ### Helpers
 
@@ -119,18 +120,18 @@ additional items into the environment.
 
 Models are optional, but since using models to store data has become so common
 it seems silly not to support them in context and generators. Models do
-not get loaded by the Apx framework but can be added during an initializer
+not get loaded by the APX framework, but can be added during an initializer
 or per action or task.
 
 ### Services
 
 Services are just libraries that are treated as singletons. Services should
-be used to maintain in memory information and provide access to data providers.
+be used to maintain in-memory information, and/or provide access to data providers.
 Models are services but services are not necessarily models.
 
 ### Tasks
 
-Tasks are jobs that are ran either periodically or scheduled to run by an action.
+Tasks are jobs which are run either periodically or scheduled to run by an action.
 Tasks are considered headless and while they consume request data. They do not
 provide response data. They can, however, log using [winston](https://github.com/flatiron/winston).
 
@@ -145,16 +146,16 @@ objects. An example of a translator would be an *express HTTP server*.
 All parts of the structure are implemented in plugins. APX follows a simple plugin format
 that is similar in all parts of user space. The main APX package only provides the plugin
 loader and depends on plugins to add functionality to the system. This allows APX to be
-non opinionated.
+non-opinionated.
 
 #### Plugin Verbs / Nouns
 
 There are a couple common verbs used in plugins.
 
-* **run** -- Used to execute a function on a call event such as an action or taks
+* **run** -- Used to execute a function on a call event such as an action or task
 * **start** -- Used in initializers and translators to start instances / listeners
-* **stop** -- Used in intializers and translators to stop instances / listeners and shutdown cleanly
-* **module** -- Used in helpers, models and services to export object to be used.
+* **stop** -- Used in initializers and translators to stop instances / listeners, and shutdown cleanly
+* **module** -- Used in helpers, models and services to export object to be used
 
 ### Actions / Tasks
 
@@ -214,6 +215,7 @@ Clustering in APX is a breeze. Simply use
 Here is a quick example
 
 **app.js**
+
 ```js
 var apx = require('./apx')
 
@@ -236,6 +238,7 @@ apx.start()
 ```
 
 **server.js**
+
 ```js
 var clusterMaster = require('cluster-master')
 
@@ -307,7 +310,7 @@ Fired after shutdown has been completed.
 ```js
 var apx = require('apx')
 apx.on('dead',function(inst){
-  console.log('APX is ready',instance)
+  console.log('APX has died',instance)
 })
 ```
 
@@ -444,7 +447,7 @@ file transport to point to.
 * Usage no longer involves `new Apx` the returned object is now an event emitter
 * Changed lifecycle management and abstract usage of the APX library. This changes
 usage of APX and will require upgrading.
-* SysLog added for core level logging. Winston should be used for userspace logging.
+* SysLog added for core level logging. Winston should be used for user-space logging.
 * Kue removed from core package and abstracted to [apx-kue](https://github.com/snailjs/apx-kue)
 * Tasks are no longer initialized by the core should be implemented in an initializer
 * Updated plugin format (this means existing initializer/translator/service plugins will need to upgrade) see the README

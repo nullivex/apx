@@ -442,6 +442,8 @@ file transport to point to.
 
 ### 0.4.0
 * Usage no longer involves `new Apx` the returned object is now an event emitter
+* Changed lifecycle management and abstract usage of the APX library. This changes
+usage of APX and will require upgrading.
 * SysLog added for core level logging. Winston should be used for userspace logging.
 * Kue removed from core package and abstracted to [apx-kue](https://github.com/snailjs/apx-kue)
 * Tasks are no longer initialized by the core should be implemented in an initializer

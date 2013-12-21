@@ -7,7 +7,7 @@
 
 ## APX API Server
 
-APX *(pronounced 'apex')* is a modern API server designed to serve multiple communication mediums.
+APX *(pronounced 'apex')* is a pluggable modern API server designed to serve multiple communication mediums.
 That relies on modern popular packages such as
 [express](https://github.com/visionmedia/express),
 [kue](https://github.com/learnboost/kue),
@@ -38,12 +38,13 @@ $ npm install apx
 ```
 **app.js**
 ```js
-var Apx = require('apx')
+var apx = require('apx')
 
-var server = new Apx({
+var server = apx({
   config: ['config.json'],
   tasks: ['tasks/*.js'],
-  translators: [require('apx-express')]
+  initializers: ['apx-kue','apx-mongoose']
+  translators: ['apx-express']
   winston: {file: 'foo.log'}
 })
 ```
@@ -139,15 +140,14 @@ Here is a quick example
 
 **app.js**
 ```js
-var Apx = require('./apx')
+var apx = require('./apx')
 
-new Apx({
+apx({
   cwd: __dirname + '/app',
-  cluster: ('production' === process.env.NODE_ENV),
   config: ['config.json'],
-  initializers: ['initializers/*.js'],
+  initializers: ['apx-kue'],
   tasks: ['tasks/*.js'],
-  translators: ['translators/*.js']
+  translators: ['apx-express-socket.io']
 })
 ```
 
@@ -191,20 +191,6 @@ not start Kue which should not be needed to test tasks.
 
 The current working directory is used when loading
 actions, services, and tasks.
-
-#### Kue
-
-##### Port
-* Variable `kue.port`
-* Default `3001
-
-The port that the kue web interface will listen on.
-
-##### Title
-* Variable `kue.title`
-* Default `APX Job Status`
-
-The title of the Kue web interface
 
 #### Initializers
 * Variable `initializers`

@@ -1,35 +1,55 @@
-var apx = require('../lib/Apx')
+'use strict';
+var expect = require('chai').expect
+  , apx = require('../lib/Apx')
   , path = require('path')
+
 describe('APX',function(){
   describe('setup',function(){
     it('should fire the ready event',function(done){
-      apx({
-        sysLogLevel: 2,
-        testing: true,
-        onReady: function(err,apx){
-          if(err) throw err
-          expect(apx.isReady).to.equal(true)
-          done()
-        }
+      apx.once('ready',function(apx){
+        expect(apx.readyState).to.equal(1)
+        apx.stop()
+        done()
       })
+      apx.setup({
+        sysLogLevel: 2,
+        testing: true
+      })
+      apx.start()
     })
-    it('should resolve a relative path with cwd',function(){
-      var inst = apx({
+    it('should resolve a relative path with cwd',function(done){
+      apx.once('ready',function(apx){
+        expect(apx.resolvePath('init.js')).to.equal(path.resolve(__dirname + '/init.js'))
+        apx.stop()
+        done()
+      })
+      apx.setup({
         sysLogLevel: 2,
         testing: true,
         cwd: __dirname
       })
-      expect(inst.resolvePath('init.js')).to.equal(path.resolve(__dirname + '/init.js'))
+      apx.start()
     })
   })
   describe('methods',function(){
     var instance
-    beforeEach(function(){
-      instance = apx({
+    beforeEach(function(done){
+      apx.once('ready',function(apx){
+        instance = apx
+        done()
+      })
+      apx.setup({
         sysLogLevel: 2,
         testing: true,
         cwd: __dirname
       })
+      apx.start()
+    })
+    afterEach(function(done){
+      apx.once('dead',function(){
+        done()
+      })
+      apx.stop()
     })
     it('should run an action',function(done){
       var action = {
@@ -57,7 +77,7 @@ describe('APX',function(){
     })
     it('should get a new instance of a service',function(){
       var service = {
-        service: function(){
+        module: function(){
           this.mystuff = 'val1'
         }
       }
@@ -71,7 +91,7 @@ describe('APX',function(){
     })
     it('should get the same instance of a service',function(){
       var service = {
-        service: function(){
+        module: function(){
           this.mystuff = 'val1'
         }
       }

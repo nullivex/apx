@@ -7,8 +7,8 @@
 
 ## APX API Server
 
-APX *(pronounced 'apex')* is a pluggable modern API server designed to serve multiple communication mediums.
-That relies on modern popular packages such as
+APX *(pronounced 'apex')* is a non opinionated, pluggable, modern API server designed to serve
+multiple communication mediums. The core APX plugins rely on popular community packages such as
 [express](https://github.com/visionmedia/express),
 [kue](https://github.com/learnboost/kue),
 [socket.io](https://github.com/learnboost/socket.io),
@@ -17,7 +17,7 @@ That relies on modern popular packages such as
 to make configuration and two-way communication a breeze.
 
 APX is built to be test friendly out of the box and comes with a `testing`
-setting in the configuration that will use mock services and increase testing speed.
+mode in the configuration that will use mock services and increase testing speed.
 
 ## Why
 
@@ -133,6 +133,20 @@ objects. An example of a translator would be an *express HTTP server*.
 
 ## Plugin Format
 
+All parts of the structure are implemented in plugins. APX follows a simple plugin format
+that is similar in all parts of user space. The main APX package only provides the plugin
+loader and depends on plugins to add functionality to the system. This allows APX to be
+non opinionated.
+
+#### Plugin Verbs / Nouns
+
+There are a couple common verbs used in plugins.
+
+* **run** -- Used to execute a function on a call event such as an action or taks
+* **start** -- Used in initializers and translators to start instances / listeners
+* **stop** -- Used in intializers and translators to stop instances / listeners and shutdown cleanly
+* **module** -- Used in helpers, models and services to export object to be used.
+
 ### Actions / Tasks
 
 ```js
@@ -141,12 +155,21 @@ exports.description = 'description of action or task' //verbose description for 
 exports.run = function(apx,cb){} //code to be executed by apx and fire the cb(err) at the end
 ```
 
+### Helpers
+
+```js
+exports.name = 'name' //should be concise and match the file name
+exports.description = 'description of model' //verbose description for generating maps
+exports.module = {} //object exported by the helper can also be a constructor
+```
+
 ### Initializers
 
 ```js
 exports.name = 'name' //should be concise and match the file name
 exports.description = 'description of initializer' //verbose description for generating maps
-exports.init = functions(apx,cb){} //code to be executed by apx and fire the cb(err) at the end
+exports.start = function(apx,cb){} //code to be executed to start the initializer, firing cb(err) at the end
+exports.stop = function(apx,cb){} //code to be executed to stop the initializer, firing cb(err) at the end
 ```
 
 ### Models
@@ -154,7 +177,15 @@ exports.init = functions(apx,cb){} //code to be executed by apx and fire the cb(
 ```js
 exports.name = 'name' //should be concise and match the file name
 exports.description = 'description of model' //verbose description for generating maps
-exports.model = {} //model object created by desired database software
+exports.module = {} //model object created by desired database software
+```
+
+### Services
+
+```js
+exports.name = 'name' //should be concise and match the file name
+exports.description = 'description of model' //verbose description for generating maps
+exports.module = function(){} //constructor function with a prototype for instantiation
 ```
 
 ### Translators
@@ -202,6 +233,121 @@ To start the cluster simply run
 ```
 $ node server
 ```
+
+## Events
+
+APX is an **EventEmitter** and will emit various actions during its
+lifecycle that can be used to hook for additional functionality.
+
+### readyStateChange
+
+Fired each time the readyState of the system changes.
+
+```js
+var apx = require('apx')
+apx.on('readyStateChange',function(readyState){
+  console.log('APX changed ready state to ' + readyState)
+})
+```
+
+The following ready states are supported.
+
+* 0 - Dead (not started or stopped)
+* 1 - Ready (completed init and ready to accept operations)
+* 2 - Configured (finished configuring and ready to start)
+* 3 - Starting (before init actions are fired)
+* 4 - Stopping (before shutdown actions are fired)
+
+### error
+
+Fired any time an error occurs.
+
+```js
+var apx = require('apx')
+apx.on('error',function(err){
+  console.log('APX had an error',err)
+})
+```
+
+### ready
+
+Fired when configuration and init is completed
+
+```js
+var apx = require('apx')
+apx.on('ready',function(inst){
+  console.log('APX is ready',instance)
+})
+```
+
+The instance after init is passed to the event.
+
+### dead
+
+Fired after shutdown has been completed.
+
+```js
+var apx = require('apx')
+apx.on('dead',function(inst){
+  console.log('APX is ready',instance)
+})
+```
+
+The instance after shutdown is passed to the event.
+
+### runActionBefore
+
+Fired before running an action.
+
+```js
+var apx = require('apx')
+apx.on('runActionBefore',function(action){
+  console.log('APX action before',action)
+})
+```
+
+The action object is passed to the event.
+
+### runActionAfter
+
+Fired after running an action.
+
+```js
+var apx = require('apx')
+apx.on('runActionAfter',function(action){
+  console.log('APX action after',action)
+})
+```
+
+The action object is passed to the event.
+
+### runTaskBefore
+
+Fired before running a task.
+
+```js
+var apx = require('apx')
+apx.on('runTaskBefore',function(task){
+  console.log('APX task before',task)
+})
+```
+
+The task object is passed to the event.
+
+### runTaskAfter
+
+Fired after running a task.
+
+```js
+var apx = require('apx')
+apx.on('runTaskAfter',function(task){
+  console.log('APX task after',task)
+})
+```
+
+The task object is passed to the event.
+
+**NOTE** the instance is destroyed after this event.
 
 ## Configuration
 
@@ -277,13 +423,14 @@ file transport to point to.
 ## Changelog
 
 ### 0.4.0
-* Usage no longer involves `new Apx` the returned function is now a singleton
-manager and any time new options are passed it will return a new instance.
+* Usage no longer involves `new Apx` the returned object is now an event emitter
 * SysLog added for core level logging. Winston should be used for userspace logging.
 * Kue removed from core package and abstracted to [apx-kue](https://github.com/snailjs/apx-kue)
 * Tasks are no longer initialized by the core should be implemented in an initializer
-* Updated plugin format (this means existing translator plugins will need to upgrade) see the README
+* Updated plugin format (this means existing initializer/translator/service plugins will need to upgrade) see the README
 for the prescribed plugin format.
+* Added `'use strict';` statements to all files and removed testing init file
+* APX is now an event emitter and `onReady` has been removed see README for events
 
 ### 0.3.4
 * Updated to **object-manage** 0.4.0

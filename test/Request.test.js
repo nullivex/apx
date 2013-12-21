@@ -1,4 +1,6 @@
-var Request = require('../lib/Request')
+'use strict';
+var expect = require('chai').expect
+  , Request = require('../lib/Request')
 describe('APX Request',function(){
   var data1 = {test1: 'val1', test2: 'val2'}
     , data2 = {test3: 'val3', test4: 'val4'}

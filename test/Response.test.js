@@ -1,4 +1,6 @@
-var Response = require('../lib/Response')
+'use strict';
+var expect = require('chai').expect
+  , Response = require('../lib/Response')
 describe('APX Response',function(){
   describe('constructor',function(){
     it('should accept a callback to the constructor',function(){

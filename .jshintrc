@@ -8,6 +8,7 @@
   "eqeqeq": true,
   "immed": true,
   "indent": 2,
+  "strict": true,
   "latedef": true,
   "newcap": true,
   "noarg": true,
@@ -16,5 +17,8 @@
   "undef": true,
   "unused": true,
   "trailing": true,
-  "smarttabs": true
+  "smarttabs": true,
+  "globals": {
+    "exports": true
+  }
 }

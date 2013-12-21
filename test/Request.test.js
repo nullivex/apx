@@ -28,7 +28,7 @@ describe('APX Request',function(){
     var req = new Request([data1,data3])
     expect(req.exists('test5.test6')).to.equal(true)
   })
-  it('should be false if a key doesnt exist',function(){
+  it('should be false if a key doesn\'t exist',function(){
     var req = new Request([data1,data3])
     expect(req.exists('test6.test6')).to.equal(false)
   })

@@ -143,7 +143,7 @@ exports.run = function(apx,cb){} //code to be executed by apx and fire the cb(er
 
 ### Initializers
 
-``js
+```js
 exports.name = 'name' //should be concise and match the file name
 exports.description = 'description of initializer' //verbose description for generating maps
 exports.init = functions(apx,cb){} //code to be executed by apx and fire the cb(err) at the end

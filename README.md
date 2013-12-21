@@ -40,13 +40,22 @@ $ npm install apx
 ```js
 var apx = require('apx')
 
-var server = apx({
+apx.once('ready',function(){
+  console.log('APX is ready!')
+})
+
+//pass options and configure
+apx.setup({
   config: ['config.json'],
   tasks: ['tasks/*.js'],
   initializers: ['apx-kue','apx-mongoose']
   translators: ['apx-express']
   winston: {file: 'foo.log'}
 })
+
+//start (runs initializers and translators)
+apx.start()
+
 ```
 
 ### Generator
@@ -208,13 +217,22 @@ Here is a quick example
 ```js
 var apx = require('./apx')
 
-apx({
+apx.once('ready',function(apx){
+  console.log('APX is ready!',apx)
+})
+
+apx.setup({
   cwd: __dirname + '/app',
   config: ['config.json'],
   initializers: ['apx-kue'],
   tasks: ['tasks/*.js'],
   translators: ['apx-express-socket.io']
+  express: {
+    port: 3000
+  }
 })
+
+apx.start()
 ```
 
 **server.js**

@@ -1,4 +1,5 @@
-# [SnailJS](//github.com/snailjs/).[APX](//github.com/snailjs/apx/)
+[SnailJS](//github.com/snailjs/).[APX](//github.com/snailjs/apx/)
+==========
 
 [![Build Status](https://travis-ci.org/snailjs/apx.png?branch=master)](https://travis-ci.org/snailjs/apx)
 
@@ -253,6 +254,13 @@ Filename for [winston](https://github.com/flatiron/winston)
 file transport to point to.
 
 ## Changelog
+
+### 0.4.0
+* Usage no longer involves `new Apx` the returned function is now a singleton
+manager and any time new options are passed it will return a new instance.
+* SysLog added for core level logging. Winston should be used for userspace logging.
+* Kue removed from core package and abstracted to [apx-kue](https://github.com/snailjs/apx-kue)
+* Tasks are no longer initialized by the core should be implemented in an initializer
 
 ### 0.3.4
 * Updated to **object-manage** 0.4.0

@@ -1,6 +1,6 @@
 {
   "name": "apx",
-  "version": "0.3.4",
+  "version": "0.4.0",
   "description": "A scalable, extensible, modular API Server",
   "homepage": "https://github.com/snailjs/apx",
   "bugs": "https://github.com/snailjs/apx/issues",

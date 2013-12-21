@@ -1,19 +1,21 @@
-var Apx = require('../lib/Apx')
+var apx = require('../lib/Apx')
   , path = require('path')
 describe('APX',function(){
   describe('setup',function(){
     it('should fire the ready event',function(done){
-      new Apx({
+      apx({
+        sysLogLevel: 2,
         testing: true,
-        onReady: function(err,inst){
+        onReady: function(err,apx){
           if(err) throw err
-          expect(inst.isReady).to.equal(true)
+          expect(apx.isReady).to.equal(true)
           done()
         }
       })
     })
     it('should resolve a relative path with cwd',function(){
-      var inst = new Apx({
+      var inst = apx({
+        sysLogLevel: 2,
         testing: true,
         cwd: __dirname
       })
@@ -21,9 +23,10 @@ describe('APX',function(){
     })
   })
   describe('methods',function(){
-    var apx
+    var instance
     beforeEach(function(){
-      apx = new Apx({
+      instance = apx({
+        sysLogLevel: 2,
         testing: true,
         cwd: __dirname
       })
@@ -35,7 +38,7 @@ describe('APX',function(){
           res.success()
         }
       }
-      apx.runAction(action,{mydata: 'val1'},function(res){
+      instance.runAction(action,{mydata: 'val1'},function(res){
         expect(res.get('status')).to.equal('ok')
         done()
       })
@@ -47,7 +50,7 @@ describe('APX',function(){
           next()
         }
       }
-      apx.runTask(task,{mydata: 'val1'},function(err){
+      instance.runTask(task,{mydata: 'val1'},function(err){
         if(err) throw err
         done()
       })
@@ -58,12 +61,12 @@ describe('APX',function(){
           this.mystuff = 'val1'
         }
       }
-      var inst = apx.newService(service)
+      var inst = instance.newService(service)
       expect(inst.mystuff).to.equal('val1')
       //set the value to something else and reinit
       inst.mystuff = 'foo'
       expect(inst.mystuff).to.equal('foo')
-      inst = apx.newService(service)
+      inst = instance.newService(service)
       expect(inst.mystuff).to.equal('val1')
     })
     it('should get the same instance of a service',function(){
@@ -72,12 +75,12 @@ describe('APX',function(){
           this.mystuff = 'val1'
         }
       }
-      var inst = apx.service(service)
+      var inst = instance.service(service)
       expect(inst.mystuff).to.equal('val1')
       //set the value to something else and reinit
       inst.mystuff = 'foo'
       expect(inst.mystuff).to.equal('foo')
-      inst = apx.service(service)
+      inst = instance.service(service)
       expect(inst.mystuff).to.equal('foo')
     })
   })

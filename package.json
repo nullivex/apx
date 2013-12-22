@@ -37,7 +37,7 @@
   },
   "dependencies": {
     "glob": "~3.2.7",
-    "object-manage": "~0.4.0",
+    "object-manage": "snailjs/object-manage#master",
     "async": "~0.2.9"
   },
   "devDependencies": {

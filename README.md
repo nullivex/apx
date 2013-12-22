@@ -47,16 +47,13 @@ apx.once('ready',function(){
 })
 
 //pass options and configure
-apx.setup({
+apx.start({
   config: ['config.json'],
   tasks: ['tasks/*.js'],
   initializers: ['apx-kue','apx-mongoose']
   translators: ['apx-express']
   winston: {file: 'foo.log'}
 })
-
-//start (runs initializers and translators)
-apx.start()
 ```
 
 ### Generator
@@ -223,7 +220,7 @@ apx.once('ready',function(apx){
   console.log('APX is ready!',apx)
 })
 
-apx.setup({
+apx.start({
   cwd: __dirname + '/app',
   config: ['config.json'],
   initializers: ['apx-kue'],
@@ -233,8 +230,6 @@ apx.setup({
     port: 3000
   }
 })
-
-apx.start()
 ```
 
 **server.js**
@@ -421,6 +416,78 @@ An array of [globs](https://github.com/isaacs/node-glob)
 or objects or absolute file paths. That will resolve
 to translators that should be started when the
 server is started
+
+## Lifecycle API
+
+The lifecycle functions control how APX is started, stopped and configured.
+
+### Setup
+
+Pass configuration parameters and instantiate the library. Does not
+start initializers or translators.
+
+```js
+apx.setup({
+  cwd: __dirname
+})
+``
+
+### Start
+
+Starts the APX server by starting initializers and translators. Once that is compelte
+it fires the `ready` event which is passed the instance of APX.
+
+```js
+apx.setup({
+  cwd: __dirname
+})
+apx.start()
+
+//or for more convienence
+apx.start({
+  cwd: __dirname
+})
+```
+
+**Note** If no object is passed to start and setup has not been called APX will
+throw an exception `Tried to start APX without setting it up`
+
+### Stop
+
+Stops the APX server by stopping initializers and translators. Once that is complete
+it fires the `dead` event and destroys the instance.
+
+```js
+apx.once('dead',function(){
+  console.log('APX is now dead')
+})
+apx.once('ready',function(){
+  apx.stop()
+})
+apx.start({cwd: __dirname})
+```
+
+### Apx
+
+Reference to the Apx constructor and its prototype. Useful for overriding prototypes before startup.
+
+```js
+console.log(apx.Apx.prototype.readyState) //0
+```
+
+### Instance
+
+The current instance of APX is stored here. This can be use for mocking testing and passing the instance
+instead of having APX do it manually.
+
+```js
+var initializer = require('apx-mongoose')
+initializer.start(apx.instance,function(){
+  console.log('Manually started apx-mongoose')
+})
+```
+
+**Note** the instance will be `null` by default when APX has either yet to be started or after being stopped.
 
 ## Changelog
 

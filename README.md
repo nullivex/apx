@@ -430,7 +430,7 @@ start initializers or translators.
 apx.setup({
   cwd: __dirname
 })
-``
+```
 
 ### Start
 

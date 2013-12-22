@@ -11,11 +11,10 @@ describe('APX',function(){
         apx.stop()
         done()
       })
-      apx.setup({
+      apx.start({
         sysLogLevel: 2,
         testing: true
       })
-      apx.start()
     })
     it('should resolve a relative path with cwd',function(done){
       apx.once('ready',function(apx){
@@ -23,12 +22,11 @@ describe('APX',function(){
         apx.stop()
         done()
       })
-      apx.setup({
+      apx.start({
         sysLogLevel: 2,
         testing: true,
         cwd: __dirname
       })
-      apx.start()
     })
   })
   describe('methods',function(){
@@ -38,12 +36,11 @@ describe('APX',function(){
         instance = apx
         done()
       })
-      apx.setup({
+      apx.start({
         sysLogLevel: 2,
         testing: true,
         cwd: __dirname
       })
-      apx.start()
     })
     afterEach(function(done){
       apx.once('dead',function(){

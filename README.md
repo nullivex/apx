@@ -422,25 +422,6 @@ or objects or absolute file paths. That will resolve
 to translators that should be started when the
 server is started
 
-#### Winston
-
-Below configuration options allow for basic
-winston transport configuration. Additional
-transports should be set in `initializers`.
-
-##### Console
-* Variable `winston.console`
-* Default `true`
-
-Enables the console transport for [winston](https://github.com/flatiron/winston).
-
-##### File
-* Variable `winston.file`
-* Default `''`
-
-Filename for [winston](https://github.com/flatiron/winston)
-file transport to point to.
-
 ## Changelog
 
 ### 0.4.0
@@ -449,6 +430,7 @@ file transport to point to.
 usage of APX and will require upgrading.
 * SysLog added for core level logging. Winston should be used for user-space logging.
 * Kue removed from core package and abstracted to [apx-kue](https://github.com/snailjs/apx-kue)
+* Winston removed from core package and abstracted to [apx-winston](https://github.com/snailjs/apx-winston)
 * Tasks are no longer initialized by the core should be implemented in an initializer
 * Updated plugin format (this means existing initializer/translator/service plugins will need to upgrade) see the README
 for the prescribed plugin format.

@@ -90,6 +90,7 @@ APX consists of several well-known idioms
 * actions
 * helpers
 * initializers
+* middleware
 * models
 * services
 * tasks
@@ -112,6 +113,16 @@ these are libraries that augment the `req`,`res` variables.
 Initializers get executed when the server starts up and are only executed
 once. These are useful for setting up database connections and loading
 additional items into the environment.
+
+### Middleware
+
+Middleware is inspired by the idea of Connect Middleware and uses the same
+principle format.
+
+Middleware is executed before actions are fired and is passed the **Request** and
+**Response** objects for augmentation.
+
+Middleware is also the prescribed location to setup authentication handlers.
 
 ### Models
 
@@ -154,12 +165,12 @@ There are a couple common verbs used in plugins.
 * **stop** -- Used in initializers and translators to stop instances / listeners, and shutdown cleanly
 * **module** -- Used in helpers, models and services to export object to be used
 
-### Actions / Tasks
+### Actions
 
 ```js
 exports.name = 'name' //should be concise and match the file name
-exports.description = 'description of action or task' //verbose description for generating maps
-exports.run = function(apx,cb){} //code to be executed by apx and fire the cb(err) at the end
+exports.description = 'description of task' //verbose description for generating maps
+exports.run = function(apx,req,res,next){} //code to be executed by apx and fire the next(err) at the end
 ```
 
 ### Helpers
@@ -175,8 +186,16 @@ exports.module = {} //object exported by the helper can also be a constructor
 ```js
 exports.name = 'name' //should be concise and match the file name
 exports.description = 'description of initializer' //verbose description for generating maps
-exports.start = function(apx,cb){} //code to be executed to start the initializer, firing cb(err) at the end
-exports.stop = function(apx,cb){} //code to be executed to stop the initializer, firing cb(err) at the end
+exports.start = function(apx,next){} //code to be executed to start the initializer, firing next(err) at the end
+exports.stop = function(apx,next){} //code to be executed to stop the initializer, firing next(err) at the end
+```
+
+### Middleware
+
+```js
+exports.name = 'name' //should be concise and match the file name
+exports.description = 'description of middleware' //verbose description for generating maps
+exports.run = function(apx,req,res,next){} //constructor function with a prototype for instantiation
 ```
 
 ### Models
@@ -191,7 +210,7 @@ exports.module = {} //model object created by desired database software
 
 ```js
 exports.name = 'name' //should be concise and match the file name
-exports.description = 'description of model' //verbose description for generating maps
+exports.description = 'description of service' //verbose description for generating maps
 exports.module = function(){} //constructor function with a prototype for instantiation
 ```
 
@@ -200,8 +219,16 @@ exports.module = function(){} //constructor function with a prototype for instan
 ```js
 exports.name = 'name' //should be concise and match the file name
 exports.description = 'description of action or task' //verbose description for generating maps
-exports.start = function(apx,cb){} //code to be executed to start the translator, firing cb(err) at the end
-exports.stop = function(apx,cb){} //code to be executed to stop the translator, firing cb(err) at the end
+exports.start = function(apx,next){} //code to be executed to start the translator, firing next(err) at the end
+exports.stop = function(apx,next){} //code to be executed to stop the translator, firing next(err) at the end
+```
+
+### Tasks
+
+```js
+exports.name = 'name' //should be concise and match the file name
+exports.description = 'description of task' //verbose description for generating maps
+exports.run = function(apx,req,next){} //code to be executed by apx and fire the next(err) at the end
 ```
 
 ## Clustering
@@ -503,6 +530,9 @@ usage of APX and will require upgrading.
 for the prescribed plugin format.
 * Added `'use strict';` statements to all files and removed testing init file
 * APX is now an event emitter and `onReady` has been removed see README for events
+* Response object no longer accepts a callback and actions should fire next explictly with any errors. See
+plugin format in the README for details.
+* Added the idea of middleware that is executed in order before each action process.
 
 ### 0.3.4
 * Updated to **object-manage** 0.4.0

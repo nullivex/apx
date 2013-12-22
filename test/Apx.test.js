@@ -50,12 +50,14 @@ describe('APX',function(){
     })
     it('should run an action',function(done){
       var action = {
-        run: function(apx,req,res){
+        run: function(apx,req,res,next){
           expect(req.get('mydata')).to.equal('val1')
           res.success()
+          next()
         }
       }
-      instance.runAction(action,{mydata: 'val1'},function(res){
+      instance.runAction(action,{mydata: 'val1'},function(err,res){
+        if(err) throw err
         expect(res.get('status')).to.equal('ok')
         done()
       })

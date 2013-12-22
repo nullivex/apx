@@ -443,7 +443,7 @@ apx.setup({
 })
 apx.start()
 
-//or for more convienence
+//or for more convenience
 apx.start({
   cwd: __dirname
 })

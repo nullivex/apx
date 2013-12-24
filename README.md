@@ -282,6 +282,11 @@ $ node server
 APX is an **EventEmitter** and will emit various actions during its
 lifecycle that can be used to hook for additional functionality.
 
+**NOTE** The event emitter for APX is a singleton so be careful when
+registering events as they may get fired by more than one instance. Thus,
+its important to use the `once` operator on a lot of one-off events. Then
+use the `dead` event to re-arm.
+
 ### readyStateChange
 
 Fired each time the readyState of the system changes.
@@ -490,6 +495,25 @@ apx.once('dead',function(){
 })
 apx.once('ready',function(){
   apx.stop()
+})
+apx.start({cwd: __dirname})
+```
+
+### Restart
+
+Restart the APX server by stopping initializers and translators and then restarting them.
+Stop will fire the `dead` event.
+Start will fire the `ready` event.
+
+```js
+apx.on('dead',function(){
+  console.log('APX is now dead')
+})
+apx.on('ready',function(){
+  console.log('APX is now ready')
+})
+apx.once('ready',function(){
+  apx.restart()
 })
 apx.start({cwd: __dirname})
 ```

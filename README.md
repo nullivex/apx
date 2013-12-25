@@ -402,6 +402,10 @@ The task object is passed to the event.
 APX uses [object-manage](https://github.com/snailjs/object-manage) to load
 and manage configuration data.
 
+This also means the APX instance emits the events from object-manage see below.
+
+[object-manage Events](https://github.com/snailjs/object-manage#events)
+
 ### Schema
 
 #### Testing

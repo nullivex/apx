@@ -551,6 +551,8 @@ initializer.start(apx.instance,function(){
 * Implementation of APX authentication system [#3](https://github.com/snailjs/apx/issues/3)
 * APX now loads packages exactly like Node's `require()`. Except for the addition of parsing
 globs. [see this](http://nodejs.org/api/modules.html#modules_loading_from_node_modules_folders)
+* Middleware now supports `pre` and `post` actions with a default of `run` which will be fired before
+the action.
 
 ### 0.4.0
 * Usage no longer involves `new Apx` the returned object is now an event emitter

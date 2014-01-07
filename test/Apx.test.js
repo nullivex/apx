@@ -50,6 +50,7 @@ describe('APX',function(){
     })
     it('should run an action',function(done){
       var action = {
+        name: 'foo',
         run: function(apx,req,res,next){
           expect(req.get('mydata')).to.equal('val1')
           res.success()
@@ -59,6 +60,30 @@ describe('APX',function(){
       instance.runAction(action,{mydata: 'val1'},function(err,res){
         if(err) throw err
         expect(res.get('status')).to.equal('ok')
+        done()
+      })
+    })
+    it('should run middleware before and after',function(done){
+      var action = {
+        name: 'foo',
+        run: function(apx,req,res,next){
+          expect(req.get('foo')).to.equal('yes')
+          next()
+        }
+      }
+      var middleware = {
+        pre: function(apx,req,res,next){
+          req.set('foo','yes')
+          next()
+        },
+        post: function(apx,req,res,next){
+          res.set('foo','no')
+          next()
+        }
+      }
+      instance.config.set('middleware',middleware)
+      instance.runAction(action,{},function(err,res){
+        expect(res.get('foo')).to.equal('no')
         done()
       })
     })

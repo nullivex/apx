@@ -128,5 +128,68 @@ describe('APX',function(){
       expect(inst.mystuff).to.equal('foo')
     })
   })
-
+  describe('Load Items',function(){
+    var instance
+    before(function(done){
+      apx.once('ready',function(apx){
+        instance = apx
+        done()
+      })
+      apx.start({
+        sysLogLevel: 2,
+        testing: true,
+        cwd: __dirname
+      })
+    })
+    after(function(done){
+      apx.once('dead',function(){
+        done()
+      })
+      apx.stop()
+    })
+    it('should allow passing of plugins directly as objects',function(done){
+      instance.loadItems({name: 'foo'},function(item,next){
+        expect(item.name).to.equal('foo')
+        next()
+      },done)
+    })
+    it('should load packages when no relative path is given',function(){
+      var load = function(){
+        instance.loadItems('foo',function(item,next){
+          next()
+        })
+      }
+      expect(load).to.throw('Cannot find module \'foo\'')
+    })
+    it('should load a glob when path ends with .js',function(done){
+      instance.loadItems('foo.js',function(item,next){
+        expect(item.name).to.equal('foo')
+        next()
+      },done)
+    })
+    it('should load a glob when path ends with .json',function(done){
+      instance.loadItems('foo.json',function(item,next){
+        expect(item.name).to.equal('foo')
+        next()
+      },done)
+    })
+    it('should load a glob when path ends with .node',function(done){
+      instance.loadItems('foo.node',function(item,next){
+        expect(item.name).to.equal('foo')
+        next()
+      },done)
+    })
+    it('should load a glob when path starts with ./',function(done){
+      instance.loadItems('./foo',function(item,next){
+        expect(item.name).to.equal('foo')
+        next()
+      },done)
+    })
+    it('should load a glob when path starts with ../',function(done){
+      instance.loadItems('../foo',function(item,next){
+        expect(item.name).to.equal('foo')
+        next()
+      },done)
+    })
+  })
 })

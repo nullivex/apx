@@ -544,7 +544,31 @@ initializer.start(apx.instance,function(){
 
 **Note** the instance will be `null` by default when APX has either yet to be started or after being stopped.
 
+## Request and Response Objects
+
+In APX the request and response objects create the common layer that translators iterate. They are instances of
+[object-manage](https://github.com/snailjs/object-manage) and expose all the available methods. These objects,
+however, **are not streams**. This is a limitation in some cases but it is the only to make the call stack for
+middleware usable.
+
+Nearly all API servers implement commands and it is up to the translator to supply any uploaded files which should
+be written to temporary files using a tool like [formiddable](https://github.com/felixge/node-formidable). After
+that the action can direct the file to the correct location or transfer it to a storage cluster.
+
+The request and response objects support a file object that points to an incoming temporary file or a file that should
+be streamed to a file.
+
+If there is a situation where file support is more important than command support then raw stream iteration should be
+implemented in the translator. It is easy to take existing translators and modify them in userspace.
+
 ## Changelog
+
+### 0.6.0
+* Request objects now implement the file object
+* Response objects now implement the file object
+* Response.send() deprecated in favor of the existing **object-manage** functions
+* In order to support pre and post middleware translators need to fire the Response.render() method and then send
+the rendered response to their client
 
 ### 0.5.0
 

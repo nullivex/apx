@@ -1,6 +1,6 @@
 {
   "name": "apx",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "A scalable, extensible, modular API Server",
   "homepage": "https://github.com/snailjs/apx",
   "bugs": "https://github.com/snailjs/apx/issues",
@@ -37,7 +37,7 @@
   },
   "dependencies": {
     "glob": "~3.2.7",
-    "object-manage": "~0.5.0",
+    "object-manage": "~0.6.0",
     "async": "~0.2.9"
   },
   "devDependencies": {

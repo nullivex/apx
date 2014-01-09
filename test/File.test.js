@@ -21,6 +21,5 @@ describe('APX File',function(){
   })
   it('should have stats populated about the file',function(){
     expect(file.stats.size).to.equal(3)
-    expect(file.stats.mode).to.equal(33206)
   })
 })

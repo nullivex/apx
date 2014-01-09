@@ -101,7 +101,7 @@ describe('APX',function(){
     })
     it('should get a new instance of a service',function(){
       var service = {
-        module: function(){
+        service: function(){
           this.mystuff = 'val1'
         }
       }
@@ -115,7 +115,7 @@ describe('APX',function(){
     })
     it('should get the same instance of a service',function(){
       var service = {
-        module: function(){
+        service: function(){
           this.mystuff = 'val1'
         }
       }

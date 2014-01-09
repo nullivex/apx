@@ -178,7 +178,7 @@ exports.run = function(apx,req,res,next){} //code to be executed by apx and fire
 ```js
 exports.name = 'name' //should be concise and match the file name
 exports.description = 'description of model' //verbose description for generating maps
-exports.module = {} //object exported by the helper can also be a constructor
+exports.helper = {} //object exported by the helper can also be a constructor
 ```
 
 ### Initializers
@@ -195,7 +195,12 @@ exports.stop = function(apx,next){} //code to be executed to stop the initialize
 ```js
 exports.name = 'name' //should be concise and match the file name
 exports.description = 'description of middleware' //verbose description for generating maps
-exports.run = function(apx,req,res,next){} //constructor function with a prototype for instantiation
+//pre only
+exports.run = function(apx,req,res,next){} //constructor function with a prototype for instantiation (for pre run only)
+//-- or --
+//pre and post
+exports.pre = function(apx,req,res,next){} //run this function before the action
+exports.post = function(apx,req,res,next){} //runt this function after the action
 ```
 
 ### Models
@@ -203,7 +208,8 @@ exports.run = function(apx,req,res,next){} //constructor function with a prototy
 ```js
 exports.name = 'name' //should be concise and match the file name
 exports.description = 'description of model' //verbose description for generating maps
-exports.module = {} //model object created by desired database software
+exports.schema = {} //schema used to create the model
+exports.model = {} //model object created by desired database software
 ```
 
 ### Services
@@ -211,7 +217,7 @@ exports.module = {} //model object created by desired database software
 ```js
 exports.name = 'name' //should be concise and match the file name
 exports.description = 'description of service' //verbose description for generating maps
-exports.module = function(){} //constructor function with a prototype for instantiation
+exports.service = function(){} //constructor function with a prototype for instantiation
 ```
 
 ### Translators
@@ -569,6 +575,7 @@ implemented in the translator. It is easy to take existing translators and modif
 * Response.send() deprecated in favor of the existing **object-manage** functions
 * In order to support pre and post middleware translators need to fire the Response.render() method and then send
 the rendered response to their client
+* Upgraded middleware, model, service and helper format
 
 ### 0.5.0
 

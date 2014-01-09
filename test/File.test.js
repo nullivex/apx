@@ -9,7 +9,7 @@ describe('APX File',function(){
   before(function(){
     //create a temp file
     tmpFile = temp.openSync()
-    fs.write(tmpFile.fd,'foo')
+    fs.writeSync(tmpFile.fd,'foo')
     //create a file object
     file = new File(tmpFile.path)
   })

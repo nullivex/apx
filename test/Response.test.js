@@ -1,6 +1,8 @@
 'use strict';
 var expect = require('chai').expect
   , Response = require('../lib/Response')
+  , temp = require('temp')
+  , fs = require('fs')
 describe('APX Response',function(){
   describe('methods',function(){
     var res
@@ -25,6 +27,15 @@ describe('APX Response',function(){
       var obj = JSON.parse(JSON.stringify(res.get()))
       expect(obj.mydata).to.equal('val1')
     })
+    it('should support sending of a file',function(){
+      //create a temp file
+      var tmpFile = temp.openSync()
+      fs.writeSync(tmpFile.fd,'foo')
+      res.sendFile(tmpFile.path)
+      expect(res.file.path).to.equal(tmpFile.path)
+      temp.cleanup()
+    })
+
   })
 
 })

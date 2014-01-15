@@ -576,6 +576,8 @@ implemented in the translator. It is easy to take existing translators and modif
 * In order to support pre and post middleware translators need to fire the Response.render() method and then send
 the rendered response to their client
 * Upgraded middleware, model, service and helper format
+* Added `Response.sendFile(path)` to allow sending of files to the user. Using this method still requires calling `next()`
+and will supersede any existing output.
 
 ### 0.5.0
 

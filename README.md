@@ -3,7 +3,7 @@
 
 [![Build Status](https://travis-ci.org/snailjs/apx.png?branch=master)](https://travis-ci.org/snailjs/apx)
 
-![Logo](snail-apx.png)
+![Logo](http://static.yucache.net/a4e63438eea25b486f1b41979ed12f0ef98b391f?client_file_id=688861)
 
 ## APX API Server
 

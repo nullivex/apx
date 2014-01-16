@@ -6,12 +6,13 @@ var expect = require('chai').expect
 
 describe('APX File',function(){
   var tmpFile, file
-  before(function(){
+  before(function(done){
     //create a temp file
     tmpFile = temp.openSync()
     fs.writeSync(tmpFile.fd,'foo')
     //create a file object
     file = new File(tmpFile.path)
+    file.populate(done)
   })
   after(function(){
     temp.cleanup()
@@ -23,9 +24,9 @@ describe('APX File',function(){
     expect(file.stats.size).to.equal(3)
   })
   it('should have a mime type',function(){
-    expect(file.type).to.equal('application/octet-stream')
+    expect(file.mimeType).to.equal('text/plain')
   })
   it('should have an extension based on the mime type',function(){
-    expect(file.extension).to.equal('bin')
+    expect(file.mimeExtension).to.equal('txt')
   })
 })

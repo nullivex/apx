@@ -706,6 +706,8 @@ the rendered response to their client
 * Upgraded middleware, model, service and helper format
 * Added `Response.sendFile(path)` to allow sending of files to the user. Using this method still requires calling `next()`
 and will supersede any existing output.
+* Improved `Response.succes()` and `Response.error()` to accept a better combination of arguments to produce
+usable responses with a single function call.
 
 ### 0.5.0
 

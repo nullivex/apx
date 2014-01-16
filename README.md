@@ -558,7 +558,7 @@ however, **are not streams**. This is a limitation in some cases but it is the o
 middleware usable.
 
 Nearly all API servers implement commands and it is up to the translator to supply any uploaded files which should
-be written to temporary files using a tool like [formiddable](https://github.com/felixge/node-formidable). After
+be written to temporary files using a tool like [formidable](https://github.com/felixge/node-formidable). After
 that the action can direct the file to the correct location or transfer it to a storage cluster.
 
 The request and response objects support a file object that points to an incoming temporary file or a file that should

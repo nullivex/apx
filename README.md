@@ -567,6 +567,128 @@ be streamed to a file.
 If there is a situation where file support is more important than command support then raw stream iteration should be
 implemented in the translator. It is easy to take existing translators and modify them in userspace.
 
+### Request
+
+The request object contains information that is passed along from the request paths from the translator and is supplied
+in object notation. Thus, `req.get('propertyName')` is the most common usage to retrieve information. However to allow
+for the receiving of files there is a `req.files` array that shall be populated with files that were written to
+temporary files during the request.
+
+In order to access parts of the translator for more control over specific access mediums like the HTTP server the raw
+request object shall be provided via `req.raw`
+
+Example
+```js
+exports.name = 'myAction'
+exports.description = 'Example Action'
+exports.run = function(apx,req,res,next){
+  req.get('foo') //bar
+  req.raw.query.foo //bar
+  res.success()
+  next()
+}
+```
+
+#### Add File
+
+As a convenience for translators to add files to the request object the `addFile()` method exists.
+
+Example
+```js
+var req = new Request()
+req.addFile('foo.txt')
+req.addFile('bar.txt')
+```
+
+### Response
+
+The response object is built by the action and middleware which is then passed on to the user through the translators
+desired output format. In most cases the output format is JSON but this is sometimes configurable at the translator
+level.
+
+#### Add Body Content
+
+To allow the sending of raw data rather than JSON or any other format that can be transformed from an object the `add()`
+method comes in handy.
+
+Example
+```js
+exports.name = 'myAction'
+exports.description = 'Example Action'
+exports.run = function(apx,req,res,next){
+  res.add('content to show')
+  res.add('more content to show')
+  next()
+}
+```
+
+#### Success
+
+As a convenience method `success()` exists to signal success to the client. This method uses a standard response format.
+That resembles the following. Success also accepts an object that gets merged with the pre filled part of the
+response.
+
+Format
+```json
+{"status": "ok", "message": "success"}
+```
+
+Example
+```js
+exports.name = 'myAction'
+exports.description = 'Example Action'
+exports.run = function(apx,req,res,next){
+  res.success({id: 'foo'})
+  next()
+}
+```
+
+#### Error
+
+For easier error handling the error method can be used to pass an erroneous response to the client and accepts a
+few different combinations of arguments to supply the user with information about the error.
+
+Format
+```json
+{"status": "error", "message": "An error has occurred", "code": "1"}
+```
+
+Example
+```js
+exports.name = 'myAction'
+exports.description = 'Example Action'
+exports.run = function(apx,req,res,next){
+  res.error() //sends message: 'An error has occurred', code: '1'
+  res.error('foo') //sends message: 'foo', code: '1'
+  res.error('foo',4) //send message: 'foo', code: '4'
+  res.error('foo',4,{id: 'bar'}) //sends message: 'foo', code: '4', id: 'bar'
+  res.error('foo',{id: 'bar'}) //sends message: 'foo', code: '1', id: 'bar'
+  next()
+}
+```
+
+#### Send File
+
+Sometimes it is useful to send clients a file thus the `sendFile(path)` method exists. This will notify the translator
+that a file should be sent to the user and allows the translator to properly handle streaming the file to the user.
+
+When a file by that path cannot be found it will throw an exception.
+
+**NOTE** Whenever this method is called it will supersede any other output that has been queued to be sent to the user
+by using `add()` or `set()`. Unless the translator is capable of sending multipart responses.
+
+Example
+```js
+exports.name = 'myAction'
+exports.description = 'Example Action'
+exports.run = function(apx,req,res,next){
+  res.sendFile('home.html')
+  next()
+}
+```
+
+###
+
 ## Changelog
 
 ### 0.6.0

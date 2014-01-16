@@ -39,7 +39,8 @@
     "glob": "~3.2.7",
     "object-manage": "~0.6.0",
     "async": "~0.2.9",
-    "temp": "~0.6.0"
+    "temp": "~0.6.0",
+    "mime": "~1.2.11"
   },
   "devDependencies": {
     "grunt": "~0.4.2",

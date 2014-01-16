@@ -35,7 +35,27 @@ describe('APX Response',function(){
       expect(res.file.path).to.equal(tmpFile.path)
       temp.cleanup()
     })
-
+    it('should allow sending of success',function(){
+      res.success()
+      expect(res.get('status')).to.equal('ok')
+      expect(res.get('message')).to.equal('success')
+    })
+    it('should allow sending of success with an object',function(){
+      res.success({id: 'foo'})
+      expect(res.get('status')).to.equal('ok')
+      expect(res.get('message')).to.equal('success')
+      expect(res.get('id')).to.equal('foo')
+    })
+    it('should allow sending of errors',function(){
+      res.error()
+      expect(res.get('status')).to.equal('error')
+      expect(res.get('message')).to.equal('An error has occurred')
+    })
+    it('should allow sending of errors with a customer message')
+    it('should allow sending of errors with a code')
+    it('should allow sending of errors with a messages, code and object')
+    it('should allow sending of errors with a message and object')
+    it('should allow sending of errors with an object only')
   })
 
 })

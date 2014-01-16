@@ -22,4 +22,10 @@ describe('APX File',function(){
   it('should have stats populated about the file',function(){
     expect(file.stats.size).to.equal(3)
   })
+  it('should have a mime type',function(){
+    expect(file.type).to.equal('application/octet-stream')
+  })
+  it('should have an extension based on the mime type',function(){
+    expect(file.extension).to.equal('bin')
+  })
 })

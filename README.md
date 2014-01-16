@@ -663,6 +663,7 @@ exports.run = function(apx,req,res,next){
   res.error('foo',4) //send message: 'foo', code: '4'
   res.error('foo',4,{id: 'bar'}) //sends message: 'foo', code: '4', id: 'bar'
   res.error('foo',{id: 'bar'}) //sends message: 'foo', code: '1', id: 'bar'
+  res.error({id: 'bar'}) //sends message: 'An error has occurred', code: '1', id: 'bar'
   next()
 }
 ```

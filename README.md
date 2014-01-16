@@ -163,7 +163,8 @@ There are a couple common verbs used in plugins.
 * **run** -- Used to execute a function on a call event such as an action or task
 * **start** -- Used in initializers and translators to start instances / listeners
 * **stop** -- Used in initializers and translators to stop instances / listeners, and shutdown cleanly
-* **module** -- Used in helpers, models and services to export object to be used
+* **pre** -- Used in middleware to be executed before the action
+* **post** -- Used in middleware to be executed after the action
 
 ### Actions
 

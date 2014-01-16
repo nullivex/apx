@@ -700,10 +700,11 @@ exports.run = function(apx,req,res,next){
 ### 0.6.0
 * Request objects now implement the file object
 * Response objects now implement the file object
-* Response.send() deprecated in favor of the existing **object-manage** functions
-* In order to support pre and post middleware translators need to fire the Response.render() method and then send
+* Response.send() removed in favor of the existing **object-manage** functions
+* In order to support `pre` and `post` middleware translators need to fire the `Response.render()` method and then send
 the rendered response to their client
-* Upgraded middleware, model, service and helper format
+* Upgraded middleware, model, service and helper plugin format. This will require upgrading of existing plugins
+and makes this version incompatible with older plugins.
 * Added `Response.sendFile(path)` to allow sending of files to the user. Using this method still requires calling `next()`
 and will supersede any existing output.
 * Improved `Response.succes()` and `Response.error()` to accept a better combination of arguments to produce

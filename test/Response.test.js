@@ -43,13 +43,40 @@ describe('APX Response',function(){
     it('should allow sending of success with an object',function(){
       res.success({id: 'foo'})
       expect(res.get('status')).to.equal('ok')
+      expect(res.get('code')).to.equal('0')
       expect(res.get('message')).to.equal('success')
+      expect(res.get('id')).to.equal('foo')
+    })
+    it('should allow sending of success with a message',function(){
+      res.success('foo')
+      expect(res.get('status')).to.equal('ok')
+      expect(res.get('code')).to.equal('0')
+      expect(res.get('message')).to.equal('foo')
+    })
+    it('should allow sending of success with a message and code',function(){
+      res.success('foo',2)
+      expect(res.get('status')).to.equal('ok')
+      expect(res.get('code')).to.equal('2')
+      expect(res.get('message')).to.equal('foo')
+    })
+    it('should allow sending of success with a message, code, and object',function(){
+      res.success('foo',2,{id: 'foo'})
+      expect(res.get('status')).to.equal('ok')
+      expect(res.get('code')).to.equal('2')
+      expect(res.get('message')).to.equal('foo')
+      expect(res.get('id')).to.equal('foo')
+    })
+    it('should allow sending of success with a message and object',function(){
+      res.success('foo',{id: 'foo'})
+      expect(res.get('status')).to.equal('ok')
+      expect(res.get('code')).to.equal('0')
+      expect(res.get('message')).to.equal('foo')
       expect(res.get('id')).to.equal('foo')
     })
     it('should allow sending of errors',function(){
       res.error()
       expect(res.get('status')).to.equal('error')
-      expect(res.get('message')).to.equal('An error has occurred')
+      expect(res.get('message')).to.equal('error')
       expect(res.get('code')).to.equal('1')
     })
     it('should allow sending of errors with a customer message',function(){
@@ -61,13 +88,13 @@ describe('APX Response',function(){
     it('should allow sending of errors with only a code',function(){
       res.error(4)
       expect(res.get('status')).to.equal('error')
-      expect(res.get('message')).to.equal('An error has occurred')
+      expect(res.get('message')).to.equal('error')
       expect(res.get('code')).to.equal('4')
     })
     it('should allow sending of errors with only an object',function(){
       res.error({foo: 'bar'})
       expect(res.get('status')).to.equal('error')
-      expect(res.get('message')).to.equal('An error has occurred')
+      expect(res.get('message')).to.equal('error')
       expect(res.get('code')).to.equal('1')
       expect(res.get('foo')).to.equal('bar')
     })

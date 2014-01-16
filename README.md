@@ -625,12 +625,12 @@ exports.run = function(apx,req,res,next){
 #### Success
 
 As a convenience method `success()` exists to signal success to the client. This method uses a standard response format.
-That resembles the following. Success also accepts an object that gets merged with the pre filled part of the
-response.
+That resembles the following. Success also accepts a few argument combinations to allow more structured responses
+without additional function calls.
 
 Format
 ```json
-{"status": "ok", "message": "success"}
+{"status": "ok", "message": "success", "code": "0"}
 ```
 
 Example
@@ -638,7 +638,12 @@ Example
 exports.name = 'myAction'
 exports.description = 'Example Action'
 exports.run = function(apx,req,res,next){
-  res.success({id: 'foo'})
+  res.success() //sends message: 'success', code: '0'
+  res.success('foo') //sends message: 'foo', code: '0'
+  res.success('foo',4) //send message: 'foo', code: '4'
+  res.success('foo',4,{id: 'bar'}) //sends message: 'foo', code: '4', id: 'bar'
+  res.success('foo',{id: 'bar'}) //sends message: 'foo', code: '0', id: 'bar'
+  res.success({id: 'bar'}) //sends message: 'success', code: '0', id: 'bar'
   next()
 }
 ```
@@ -650,7 +655,7 @@ few different combinations of arguments to supply the user with information abou
 
 Format
 ```json
-{"status": "error", "message": "An error has occurred", "code": "1"}
+{"status": "error", "message": "error", "code": "1"}
 ```
 
 Example

@@ -723,7 +723,10 @@ var responseHandler = function(err,response){
     if('text/json' === response.mimeType){
       console.log(JSON.stringify(response.data))
     } else if('text/xml' === response.mimeType){
-      console.log(xml(reponse.data))
+      console.log(xml(response.data))
+    } else {
+      console.warn('desired output type of ' + response.mimeType + ' is not supported defaulting to JSON')
+      console.log(JSON.stringify(response.data))
     }
   } else if('raw' === response.format){
     console.log(response.body)
@@ -735,6 +738,8 @@ var responseHandler = function(err,response){
         console.log(chunk)
       }
     }
+  } else {
+    console.warn('desired output format of ' + response.format + ' is not supported, not sending output')
   }
 }
 

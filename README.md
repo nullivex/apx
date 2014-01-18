@@ -694,7 +694,53 @@ exports.run = function(apx,req,res,next){
 }
 ```
 
-###
+#### Render
+
+In order for translators to properly handle sending data to their clients there are 3 scenarios which apply to how
+the render function will respond.
+
+* **format** this is the format of the response which will be **object**, **raw**, or **file**
+* **mimeType** the detected or manually set mime type of the response should be used to respond in various
+formats when using the **object** type.
+* **body** this is the content container for the **raw** format
+* **data** this is the content container for the **object** format and contains the data object to be exported
+* **file** this is a reference to the file object when using the **file** format
+
+#### Example
+
+In this example the output will simply be logged to the console.
+
+```js
+var xml = require('xml')
+  , fs = require('fs')
+  , Response = require('apx/lib/Response')
+  , res = new Response()
+
+//create our response handler
+var responseHandler = function(err,response){
+  if(err) throw err
+  if('object' === response.format){
+    if('text/json' === response.mimeType){
+      console.log(JSON.stringify(response.data))
+    } else if('text/xml' === response.mimeType){
+      console.log(xml(reponse.data))
+    }
+  } else if('raw' === response.format){
+    console.log(response.body)
+  } else if('file' === response.format){
+    var stream = fs.createReadStream(response.file.path)
+    stream.on('readable',function(){
+      var chunk
+      while(null !== (chunk = stream.read())){
+        console.log(chunk)
+      }
+    }
+  }
+}
+
+//implement the handler
+res.render(responseHandler)
+```
 
 ## Changelog
 

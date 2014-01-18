@@ -29,4 +29,5 @@ describe('APX File',function(){
   it('should have an extension based on the mime type',function(){
     expect(file.mimeExtension).to.equal('txt')
   })
+  it('should support clearing and repopulating file info')
 })

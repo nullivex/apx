@@ -32,9 +32,10 @@ describe('APX Request',function(){
     var req = new Request([data1,data3])
     expect(req.exists('test6.test6')).to.equal(false)
   })
-  it('should be ale to remove a key and children',function(){
+  it('should be able to remove a key and children',function(){
     var req = new Request([data1,data3])
     req.remove('test5')
     expect(req.exists('test5.test6')).to.equal(false)
   })
+  it('should allow adding of files from translator')
 })

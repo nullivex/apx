@@ -112,7 +112,10 @@ describe('APX Response',function(){
       expect(res.get('code')).to.equal('1')
       expect(res.get('foo')).to.equal('bar')
     })
-
+    it('should render with an object intended for json')
+    it('should render with an object intended for xml by setting the mime type manually')
+    it('should render a raw response and auto detect the mime type')
+    it('should render a raw response with a manually set mime type')
+    it('should render a file response and auto detect the mime type')
   })
-
 })

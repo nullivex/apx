@@ -1,5 +1,7 @@
 'use strict';
 var expect = require('chai').expect
+  , temp = require('temp')
+  , fs = require('fs')
   , Request = require('../lib/Request')
 describe('APX Request',function(){
   var data1 = {test1: 'val1', test2: 'val2'}
@@ -37,5 +39,16 @@ describe('APX Request',function(){
     req.remove('test5')
     expect(req.exists('test5.test6')).to.equal(false)
   })
-  it('should allow adding of files from translator')
+  it('should allow adding of files from translator',function(){
+    var tmpFile1 = temp.openSync()
+      , tmpFile2 = temp.openSync()
+    fs.writeSync(tmpFile1.fd,'foo')
+    fs.writeSync(tmpFile2.fd,'bar')
+    var req = new Request()
+    req.addFile(tmpFile1.path)
+    req.addFile(tmpFile2.path)
+    expect(req.files[0].path).to.equal(tmpFile1.path)
+    expect(req.files[1].path).to.equal(tmpFile2.path)
+    temp.cleanup()
+  })
 })

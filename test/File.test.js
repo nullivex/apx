@@ -29,5 +29,16 @@ describe('APX File',function(){
   it('should have an extension based on the mime type',function(){
     expect(file.mimeExtension).to.equal('txt')
   })
-  it('should support clearing and repopulating file info')
+  it('should support clearing and repopulating file info',function(){
+    expect(file.mimeType).to.equal('text/plain')
+    file.clear()
+    expect(file.stats).to.equal(null)
+    expect(file.mimeType).to.equal(null)
+    expect(file.mimeExtension).to.equal(null)
+    file.populate(function(){
+      expect(file.mimeType).to.equal('text/plain')
+      expect(file.mimeExtension).to.equal('txt')
+      expect(file.stats.size).to.equal(3)
+    })
+  })
 })

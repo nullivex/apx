@@ -124,11 +124,11 @@ describe('APX Response',function(){
     })
     it('should render with an object intended for xml by setting the mime type manually',function(done){
       res.success('foo')
-      res.mimeType = 'text/xml'
+      res.mimeType = 'application/xml'
       res.render(function(err,response){
         expect(response.format).to.equal('object')
         expect(response.data.status).to.equal('ok')
-        expect(response.mimeType).to.equal('text/xml')
+        expect(response.mimeType).to.equal('application/xml')
         expect(response.charset).to.equal('utf8')
         done()
       })

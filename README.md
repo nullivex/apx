@@ -749,6 +749,10 @@ res.render(responseHandler)
 
 ## Changelog
 
+### 0.6.1
+* Added support for charsets in Response object
+* Changed the default mimeType from text/json to application/json
+
 ### 0.6.0
 * Request objects now implement the file object
 * Response objects now implement the file object

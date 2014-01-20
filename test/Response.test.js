@@ -117,7 +117,8 @@ describe('APX Response',function(){
       res.render(function(err,response){
         expect(response.format).to.equal('object')
         expect(response.data.status).to.equal('ok')
-        expect(response.mimeType).to.equal('text/json')
+        expect(response.mimeType).to.equal('application/json')
+        expect(response.charset).to.equal('utf8')
         done()
       })
     })
@@ -128,25 +129,29 @@ describe('APX Response',function(){
         expect(response.format).to.equal('object')
         expect(response.data.status).to.equal('ok')
         expect(response.mimeType).to.equal('text/xml')
+        expect(response.charset).to.equal('utf8')
         done()
       })
     })
-    it('should render a raw response and auto detect the mime type',function(done){
+    it('should render a raw response and auto detect the mime type with a user set charset',function(done){
+      res.charset = 'ISO-8859-1'
       res.add('foo')
       res.render(function(err,response){
         expect(response.format).to.equal('raw')
         expect(response.body).to.equal('foo')
         expect(response.mimeType).to.equal('text/plain')
+        expect(response.charset).to.equal('ISO-8859-1')
         done()
       })
     })
     it('should render a raw response with a manually set mime type',function(done){
       res.add('{"foo": "bar"}')
-      res.mimeType = 'text/json'
+      res.mimeType = 'application/json'
       res.render(function(err,response){
         expect(response.format).to.equal('raw')
         expect(response.body).to.equal('{"foo": "bar"}')
-        expect(response.mimeType).to.equal('text/json')
+        expect(response.mimeType).to.equal('application/json')
+        expect(response.charset).to.equal('utf8')
         done()
       })
     })
@@ -158,6 +163,7 @@ describe('APX Response',function(){
         expect(response.format).to.equal('file')
         expect(response.file).to.be.an('object')
         expect(response.mimeType).to.equal('text/plain')
+        expect(response.charset).to.equal(null)
         temp.cleanup()
         done()
       })

@@ -689,7 +689,7 @@ Example
 exports.name = 'myAction'
 exports.description = 'Example Action'
 exports.run = function(apx,req,res,next){
-  res.sendFile('home.html')
+  res.sendFile('/tmp/foo','home.html',{tmpFile: true}) //setting tmpFile to true will delete the file after sending
   next()
 }
 ```

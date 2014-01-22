@@ -62,6 +62,10 @@ Our [generator](https://github.com/snailjs/generator-apx)
 is a [yeoman](https://github.com/yeoman) generator instance
 that will scaffold your entire API server.
 
+**NOTICE** As of 0.6.0 the generator has not been completed yet.
+We are waiting for the API to solidify before creating the generator.
+This notice will be removed when the generator has been completed.
+
 ```
 //install the generator
 $ npm install generator-apx

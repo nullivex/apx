@@ -34,7 +34,7 @@ APX can be used homogeneously or through our
 
 ### Homogeneous
 ```
-$ npm install apx apx-express apx-winston --save
+$ npm install apx apx-express-socket.io --save
 ```
 
 **app.js**
@@ -49,14 +49,15 @@ apx.once('ready',function(){
 //pass options and configure
 apx.start({
   cwd: __dirname,
-  initializers: ['apx-winston'],
-  translators: ['apx-express'],
+  translators: ['apx-express-socket.io'],
   express: {
     routes: [
       {get: {path: '/foo', file: 'actions/foo.js'}}
     ]
   },
-  winston: {file: 'foo.log'},
+  'socket-io': {
+    enabled: false
+  }
 })
 ```
 

@@ -34,7 +34,7 @@ APX can be used homogeneously or through our
 
 ### Homogeneous
 ```
-$ npm install apx
+$ npm install apx apx-express apx-winston --save
 ```
 
 **app.js**
@@ -48,13 +48,34 @@ apx.once('ready',function(){
 
 //pass options and configure
 apx.start({
-  config: ['config.json'],
-  tasks: ['tasks/*.js'],
-  initializers: ['apx-kue','apx-mongoose']
-  translators: ['apx-express']
-  winston: {file: 'foo.log'}
+  cwd: __dirname,
+  initializers: ['apx-winston'],
+  translators: ['apx-express'],
+  express: {
+    routes: [
+      {get: {path: '/foo', file: 'actions/foo.js'}}
+    ]
+  },
+  winston: {file: 'foo.log'},
 })
 ```
+
+**actions/foo.js**
+
+```js
+exports.name = 'foo'
+exports.description = 'Example Foo Action'
+exports.run = function(apx,req,res,next){
+  res.set('status','alive')
+  next()
+}
+```
+
+Run the application
+
+`$ node app`
+
+Check the result of the action `http://localhost:3000/foo`
 
 ### Generator
 

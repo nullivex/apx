@@ -112,7 +112,61 @@ describe('APX Response',function(){
       expect(res.get('code')).to.equal('1')
       expect(res.get('foo')).to.equal('bar')
     })
-
+    it('should render with an object intended for json',function(done){
+      res.success('foo')
+      res.render(function(err,response){
+        expect(response.format).to.equal('object')
+        expect(response.data.status).to.equal('ok')
+        expect(response.mimeType).to.equal('application/json')
+        expect(response.charset).to.equal('utf8')
+        done()
+      })
+    })
+    it('should render with an object intended for xml by setting the mime type manually',function(done){
+      res.success('foo')
+      res.mimeType = 'application/xml'
+      res.render(function(err,response){
+        expect(response.format).to.equal('object')
+        expect(response.data.status).to.equal('ok')
+        expect(response.mimeType).to.equal('application/xml')
+        expect(response.charset).to.equal('utf8')
+        done()
+      })
+    })
+    it('should render a raw response and auto detect the mime type with a user set charset',function(done){
+      res.charset = 'ISO-8859-1'
+      res.add('foo')
+      res.render(function(err,response){
+        expect(response.format).to.equal('raw')
+        expect(response.body).to.equal('foo')
+        expect(response.mimeType).to.equal('text/plain')
+        expect(response.charset).to.equal('ISO-8859-1')
+        done()
+      })
+    })
+    it('should render a raw response with a manually set mime type',function(done){
+      res.add('{"foo": "bar"}')
+      res.mimeType = 'application/json'
+      res.render(function(err,response){
+        expect(response.format).to.equal('raw')
+        expect(response.body).to.equal('{"foo": "bar"}')
+        expect(response.mimeType).to.equal('application/json')
+        expect(response.charset).to.equal('utf8')
+        done()
+      })
+    })
+    it('should render a file response and auto detect the mime type',function(done){
+      var tmpFile = temp.openSync()
+      fs.writeSync(tmpFile.fd,'foo')
+      res.sendFile(tmpFile.path)
+      res.render(function(err,response){
+        expect(response.format).to.equal('file')
+        expect(response.file).to.be.an('object')
+        expect(response.mimeType).to.equal('text/plain')
+        expect(response.charset).to.equal(null)
+        temp.cleanup()
+        done()
+      })
+    })
   })
-
 })

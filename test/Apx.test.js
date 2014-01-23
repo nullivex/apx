@@ -63,6 +63,24 @@ describe('APX',function(){
         done()
       })
     })
+    it('should run an action and accept an array as the argument',function(done){
+      var action = {
+        name: 'foo',
+        run: function(apx,req,res,next){
+          expect(req.get()).to.include.members(['foo','bar','baz'])
+          expect(req.get('0')).to.equal('foo')
+          expect(req.get('1')).to.equal('bar')
+          expect(req.get('2')).to.equal('baz')
+          res.success()
+          next()
+        }
+      }
+      instance.runAction(action,['foo','bar','baz'],function(err,res){
+        if(err) throw err
+        expect(res.get('status')).to.equal('ok')
+        done()
+      })
+    })
     it('should run middleware before and after',function(done){
       var action = {
         name: 'foo',
@@ -95,6 +113,22 @@ describe('APX',function(){
         }
       }
       instance.runTask(task,{mydata: 'val1'},function(err){
+        if(err) throw err
+        done()
+      })
+    })
+    it('should run a task and accept an array as the argument',function(done){
+      var task = {
+        name: 'foo',
+        run: function(apx,req,next){
+          expect(req.get()).to.include.members(['foo','bar','baz'])
+          expect(req.get('0')).to.equal('foo')
+          expect(req.get('1')).to.equal('bar')
+          expect(req.get('2')).to.equal('baz')
+          next()
+        }
+      }
+      instance.runTask(task,['foo','bar','baz'],function(err){
         if(err) throw err
         done()
       })

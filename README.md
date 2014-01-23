@@ -775,6 +775,10 @@ res.render(responseHandler)
 
 ## Changelog
 
+### 0.7.0
+* Upgraded to object-manage 0.7.0 which changes how the constructor and load accept arguments
+* APX, Request, and Response all inherit the changed constructor functionality of object-manage
+
 ### 0.6.1
 * Added support for charsets in Response object
 * Changed the default mimeType from text/json to application/json

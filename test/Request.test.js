@@ -13,31 +13,39 @@ describe('APX Request',function(){
     expect(req.get('test2')).to.equal('val2')
   })
   it('should be able to merge in data after constructing',function(){
-    var req = new Request([data1,data2])
+    var req = new Request(data1,data2)
     expect(req.get('test3')).to.equal('val3')
     expect(req.get('test4')).to.equal('val4')
   })
   it('should be able to get a nested key',function(){
-    var req = new Request([data1,data3])
+    var req = new Request(data1,data3)
     expect(req.get('test5.test6')).to.equal('val6')
   })
   it('should be able to set a nested key',function(){
-    var req = new Request([data1,data3])
+    var req = new Request(data1,data3)
     req.set('test5.test6','val7')
     expect(req.get('test5.test6')).to.equal('val7')
   })
   it('should be ale to check if a key exists',function(){
-    var req = new Request([data1,data3])
+    var req = new Request(data1,data3)
     expect(req.exists('test5.test6')).to.equal(true)
   })
   it('should be false if a key doesn\'t exist',function(){
-    var req = new Request([data1,data3])
+    var req = new Request(data1,data3)
     expect(req.exists('test6.test6')).to.equal(false)
   })
   it('should be able to remove a key and children',function(){
-    var req = new Request([data1,data3])
+    var req = new Request(data1,data3)
     req.remove('test5')
     expect(req.exists('test5.test6')).to.equal(false)
+  })
+  it('should accept an array as the first argument',function(){
+    var arr = ['foo','bar','baz']
+      , req = new Request(arr)
+    expect(req.get()).to.include.members(['foo','bar','baz'])
+    expect(req.get('0')).to.equal('foo')
+    expect(req.get('1')).to.equal('bar')
+    expect(req.get('2')).to.equal('baz')
   })
   it('should allow adding of files from translator',function(){
     var tmpFile1 = temp.openSync()

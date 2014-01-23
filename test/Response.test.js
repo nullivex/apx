@@ -4,6 +4,16 @@ var expect = require('chai').expect
   , temp = require('temp')
   , fs = require('fs')
 describe('APX Response',function(){
+  describe('constructor',function(){
+    it('should accept an array as the first argument',function(){
+      var arr = ['foo','bar','baz']
+        , res = new Response(arr)
+      expect(res.get()).to.include.members(['foo','bar','baz'])
+      expect(res.get('0')).to.equal('foo')
+      expect(res.get('1')).to.equal('bar')
+      expect(res.get('2')).to.equal('baz')
+    })
+  })
   describe('methods',function(){
     var res
     beforeEach(function(){
@@ -18,7 +28,7 @@ describe('APX Response',function(){
       expect(res.get('mydata')).to.equal('val1')
     })
     it('should accept an array of objects to add to the body',function(){
-      res.load([{mydata: 'val1'},{mydata2: 'val2'}])
+      res.load({mydata: 'val1'},{mydata2: 'val2'})
       expect(res.get('mydata')).to.equal('val1')
       expect(res.get('mydata2')).to.equal('val2')
     })

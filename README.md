@@ -778,6 +778,7 @@ res.render(responseHandler)
 ### 0.6.1
 * Added support for charsets in Response object
 * Changed the default mimeType from text/json to application/json
+* Fixed small bug with passing arrays to runAction and runTask as data
 
 ### 0.6.0
 * Request objects now implement the file object

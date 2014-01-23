@@ -775,6 +775,9 @@ res.render(responseHandler)
 
 ## Changelog
 
+### 0.7.1
+* Changed the way runAction and runTask populate the request to prevent object merging issues
+
 ### 0.7.0
 * Upgraded to object-manage 0.7.0 which changes how the constructor and load accept arguments
 * APX, Request, and Response all inherit the changed constructor functionality of object-manage

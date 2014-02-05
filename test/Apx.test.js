@@ -101,6 +101,29 @@ describe('APX',function(){
       }
       instance.config.set('middleware',middleware)
       instance.runAction(action,{},function(err,res){
+        if(err) throw err
+        expect(res.get('foo')).to.equal('no')
+        done()
+      })
+    })
+    it('should support middle in the legacy format',function(done){
+      var action = {
+        name: 'foo',
+        run: function(apx,req,res,next){
+          expect(req.get('foo')).to.equal('yes')
+          res.set('foo','no')
+          next()
+        }
+      }
+      var middleware = {
+        run: function(apx,req,res,next){
+          req.set('foo','yes')
+          next()
+        }
+      }
+      instance.config.set('middleware',middleware)
+      instance.runAction(action,{},function(err,res){
+        if(err) throw err
         expect(res.get('foo')).to.equal('no')
         done()
       })

@@ -775,6 +775,9 @@ res.render(responseHandler)
 
 ## Changelog
 
+### 0.7.2
+* Fixed #5 where the post chain is broken by legacy middleware.
+
 ### 0.7.1
 * Changed the way runAction and runTask populate the request to prevent object merging issues
 

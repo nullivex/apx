@@ -40,7 +40,7 @@
     "object-manage": "~0.7.0",
     "async": "~0.2.9",
     "temp": "~0.6.0",
-    "mime": "~1.2.11",
+    "mime": "~2.4.4",
     "mmmagic": "~0.3.5"
   },
   "devDependencies": {

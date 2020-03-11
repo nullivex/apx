@@ -1,9 +1,14 @@
-[SnailJS](//github.com/snailjs/).[APX](//github.com/snailjs/apx/)
+APX
 ==========
 
-[![Build Status](https://travis-ci.org/snailjs/apx.png?branch=master)](https://travis-ci.org/snailjs/apx)
+## Kado
 
-![Logo](http://static.yucache.net/a4e63438eea25b486f1b41979ed12f0ef98b391f?client_file_id=688861)
+STOP AND READ THIS
+
+APX or Apex is no longer maintained and is superseded by Kado.
+
+A new package is available to handle all your JavaScript needs.
+See [kado.org](https://kado.org) for details.
 
 ## APX API Server
 
